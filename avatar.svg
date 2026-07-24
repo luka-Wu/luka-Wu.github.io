@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
+  <title id="title">44Ï`Mþ</title>
+  <desc id="description">&	4W„ÝÿrØ4Ï</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#164e63"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="72" fill="url(#background)"/>
+  <circle cx="416" cy="96" r="86" fill="#ffffff" opacity=".08"/>
+  <circle cx="92" cy="432" r="128" fill="#ffffff" opacity=".06"/>
+  <text
+    x="256"
+    y="330"
+    fill="#ffffff"
+    font-family="PingFang SC, Microsoft YaHei, sans-serif"
+    font-size="224"
+    font-weight="700"
+    text-anchor="middle"
+  >4</text>
+</svg>
