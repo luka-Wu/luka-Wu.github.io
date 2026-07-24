@@ -31,16 +31,18 @@ export default function DynamicPageClient({ dataByLocale, defaultLocale }: Dynam
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {pageData.type === 'publication' && (
-        <PublicationsList config={pageData.config} publications={pageData.publications} />
-      )}
-      {pageData.type === 'text' && (
-        <TextPage config={pageData.config} content={pageData.content} />
-      )}
-      {pageData.type === 'card' && (
-        <CardPage config={pageData.config} />
-      )}
+    <div className="mx-auto min-h-screen max-w-5xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+      <div className="apple-card mx-auto max-w-4xl p-6 sm:p-10 lg:p-12">
+        {pageData.type === 'publication' && (
+          <PublicationsList config={pageData.config} publications={pageData.publications} />
+        )}
+        {pageData.type === 'text' && (
+          <TextPage config={pageData.config} content={pageData.content} />
+        )}
+        {pageData.type === 'card' && (
+          <CardPage config={pageData.config} />
+        )}
+      </div>
     </div>
   );
 }

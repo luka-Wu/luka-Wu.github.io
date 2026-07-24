@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${config.site.title}`,
     },
     description: config.site.description,
-    keywords: [config.author.name, 'PhD', 'Research', config.author.institution],
+    keywords: [config.author.name, '人机交互', '健康传播', '学术主页'],
     authors: [{ name: config.author.name }],
     creator: config.author.name,
     publisher: config.author.name,
@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: openGraphLocale,
       title: config.site.title,
       description: config.site.description,
-      siteName: `${config.author.name}'s Academic Website`,
+      siteName: `${config.author.name}的个人主页`,
     },
   };
 }
@@ -132,15 +132,6 @@ export default function RootLayout({
     <html lang={runtimeI18n.defaultLocale} className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href={config.site.favicon} type="image/svg+xml" />
-        <link rel="dns-prefetch" href="https://jialeliu.com" />
-        <link rel="preconnect" href="https://jialeliu.com" crossOrigin="" />
-        <link
-          rel="preload"
-          as="font"
-          type="font/woff2"
-          href="https://jialeliu.com/fonts/georgiab.woff2"
-          crossOrigin=""
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -178,7 +169,7 @@ export default function RootLayout({
               itemsByLocale={navigationByLocale}
               siteTitleByLocale={siteTitleByLocale}
             />
-            <main className="min-h-screen pt-16 lg:pt-20">
+            <main className="min-h-screen pt-14 lg:pt-16">
               {children}
             </main>
             <Footer

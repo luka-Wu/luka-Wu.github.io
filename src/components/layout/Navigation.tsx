@@ -158,7 +158,7 @@ export default function Navigation({
   }, [measureIndicator]);
 
   return (
-    <Disclosure as="nav" className="fixed top-0 left-0 right-0 z-50">
+    <Disclosure as="nav" className="fixed inset-x-0 top-0 z-50">
       {({ open }) => (
         <>
           <motion.div
@@ -166,41 +166,41 @@ export default function Navigation({
             animate={{ y: 0 }}
             transition={{ duration: 0.6 }}
             className={cn(
-              'transition-all duration-300 ease-out',
+              'border-b transition-all duration-300 ease-out',
               scrolled
-                ? 'bg-background/80 backdrop-blur-xl border-b border-neutral-200/50 shadow-lg'
-                : 'bg-transparent'
+                ? 'border-neutral-200/70 bg-background/78 shadow-sm backdrop-blur-2xl dark:border-white/10'
+                : 'border-transparent bg-background/60 backdrop-blur-xl'
             )}
           >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center h-16 lg:h-20">
+            <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+              <div className="flex h-14 items-center justify-between lg:h-16">
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ opacity: 0.72 }}
+                  whileTap={{ scale: 0.98 }}
                   className="flex-shrink-0"
                 >
                   <Link
                     href="/"
-                    className="text-xl lg:text-2xl font-serif font-semibold text-primary hover:text-accent transition-colors duration-200"
+                    className="text-lg font-semibold tracking-tight text-primary transition-colors duration-200 hover:text-accent lg:text-xl"
                   >
                     {effectiveSiteTitle}
                   </Link>
                 </motion.div>
 
                 <div className="hidden lg:block">
-                  <div className="ml-10 flex items-center space-x-3">
+                  <div className="ml-8 flex items-center gap-2">
                     <div
                       ref={navContainerRef}
-                      className="relative flex items-baseline space-x-1"
+                      className="relative flex items-center gap-0.5"
                       onMouseLeave={() => setHoveredHref(null)}
                     >
                       {indicatorStyle && (
                         <motion.div
                           className={cn(
-                            'absolute rounded-lg pointer-events-none',
+                            'pointer-events-none absolute rounded-full',
                             hoveredHref && hoveredHref !== activeHref
-                              ? 'bg-accent/[0.07]'
-                              : 'bg-accent/10'
+                              ? 'bg-neutral-200/70 dark:bg-white/10'
+                              : 'bg-neutral-200 dark:bg-white/12'
                           )}
                           initial={false}
                           animate={{
@@ -229,7 +229,7 @@ export default function Navigation({
                             onClick={() => enableOnePageMode && setActiveHash(`#${item.target}`)}
                             onMouseEnter={() => setHoveredHref(href)}
                             className={cn(
-                              'relative px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-150',
+                              'relative rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-150',
                               isActive
                                 ? 'text-primary'
                                 : hoveredHref === href
@@ -250,7 +250,7 @@ export default function Navigation({
                 <div className="lg:hidden flex items-center space-x-2">
                   <LanguageToggle i18n={i18n} />
                   <ThemeToggle />
-                  <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-neutral-600 hover:text-primary hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent transition-colors duration-200">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-full p-2 text-neutral-600 transition-colors duration-200 hover:bg-neutral-200/70 hover:text-primary focus:outline-none">
                     <span className="sr-only">{messages.navigation.openMainMenu}</span>
                     <motion.div
                       animate={{ rotate: open ? 180 : 0 }}
@@ -276,9 +276,9 @@ export default function Navigation({
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-neutral-200/50 shadow-lg"
+                  className="apple-surface border-x-0 border-t-0 lg:hidden"
                 >
-                  <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                  <div className="space-y-1 px-5 pb-5 pt-3 sm:px-6">
                     {effectiveItems.map((item, index) => {
                       const isActive = enableOnePageMode
                         ? (item.href === '/' ? pathname === '/' && !activeHash : activeHash === `#${item.target}`)
@@ -303,10 +303,10 @@ export default function Navigation({
                             prefetch={true}
                             onClick={() => enableOnePageMode && setActiveHash(item.href === '/' ? '' : `#${item.target}`)}
                             className={cn(
-                              'block px-3 py-2 rounded-md text-base font-medium transition-all duration-200',
+                              'block rounded-xl px-4 py-3 text-base font-medium transition-all duration-200',
                               isActive
-                                ? 'text-primary bg-accent/10 border-l-4 border-accent'
-                                : 'text-neutral-600 hover:text-primary hover:bg-neutral-50'
+                                ? 'bg-neutral-200/80 text-primary dark:bg-white/10'
+                                : 'text-neutral-600 hover:bg-neutral-100 hover:text-primary'
                             )}
                           >
                             {item.title}

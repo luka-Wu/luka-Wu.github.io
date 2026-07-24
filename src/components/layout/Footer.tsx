@@ -20,17 +20,16 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
     new Date().toLocaleDateString(locale || 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <footer className="border-t border-neutral-200/50 bg-neutral-50/50 dark:bg-neutral-900/50 dark:border-neutral-700/50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="text-xs text-neutral-500">
+    <footer className="border-t border-neutral-200/70 bg-background dark:border-white/10">
+      <div className="mx-auto max-w-6xl px-5 py-8 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+          <p className="text-xs tracking-wide text-neutral-500">
             {messages.footer.lastUpdated}: {resolvedLastUpdated}
           </p>
-          <p className="text-xs text-neutral-500 flex items-center">
-            <a href="https://github.com/xyjoey/PRISM" target="_blank" rel="noopener noreferrer">
+          <p className="flex items-center text-xs text-neutral-500">
+            <a className="transition-colors hover:text-accent" href="https://github.com/xyjoey/PRISM" target="_blank" rel="noopener noreferrer">
               {messages.footer.builtWithPrism}
             </a>
-            <span className="ml-2">🚀</span>
           </p>
         </div>
       </div>

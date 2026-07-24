@@ -21,14 +21,15 @@ export default function News({ items, title }: NewsProps) {
         <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.45, delay: 0.2 }}
+            className="apple-card p-6 sm:p-8"
         >
-            <h2 className="text-2xl font-serif font-bold text-primary mb-4">{resolvedTitle}</h2>
-            <div className="space-y-3">
+            <h2 className="mb-6 text-2xl font-semibold tracking-tight text-primary">{resolvedTitle}</h2>
+            <div className="divide-y divide-neutral-200 dark:divide-white/10">
                 {items.map((item, index) => (
-                    <div key={index} className="flex items-start space-x-3">
-                        <span className="text-xs text-neutral-500 mt-1 w-16 flex-shrink-0">{item.date}</span>
-                        <p className="text-sm text-neutral-700">{item.content}</p>
+                    <div key={index} className="grid gap-1 py-4 first:pt-0 last:pb-0 sm:grid-cols-[5rem_minmax(0,1fr)] sm:gap-4">
+                        <span className="text-sm font-medium text-neutral-500">{item.date}</span>
+                        <p className="text-[15px] leading-7 text-neutral-700">{item.content}</p>
                     </div>
                 ))}
             </div>

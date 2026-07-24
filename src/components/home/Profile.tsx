@@ -108,24 +108,24 @@ export default function Profile({ author, social, features, researchInterests }:
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="sticky top-8"
+            transition={{ duration: 0.45 }}
+            className="apple-card mx-auto max-w-sm p-6 lg:sticky lg:top-24 lg:max-w-none"
         >
             {/* Profile Image */}
-            <div className="w-64 h-64 mx-auto mb-6 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
+            <div className="mx-auto mb-6 h-44 w-44 overflow-hidden rounded-[2rem] border border-black/5 bg-neutral-100 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-white/10 lg:h-48 lg:w-48">
                 <Image
                     src={author.avatar}
                     alt={author.name}
                     width={256}
                     height={256}
-                    className="w-full h-full object-cover object-[32%_center]"
+                    className="h-full w-full object-cover object-[32%_center]"
                     priority
                 />
             </div>
 
             {/* Name and Title */}
-            <div className="text-center mb-6">
-                <h1 className="text-3xl font-serif font-bold text-primary mb-2">
+            <div className="mb-5 text-center">
+                <h1 className="mb-2 text-3xl font-semibold tracking-tight text-primary">
                     {author.name}
                 </h1>
                 {author.title && (
@@ -141,7 +141,7 @@ export default function Profile({ author, social, features, researchInterests }:
             </div>
 
             {/* Contact Links */}
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-6 relative px-2">
+            <div className="relative mb-1 flex flex-wrap justify-center gap-2 px-2">
                 {socialLinks.map((link) => {
                     const IconComponent = link.icon;
                     if (link.isLocation) {
@@ -158,9 +158,9 @@ export default function Profile({ author, social, features, researchInterests }:
                                         setShowAddress(!isAddressPinned);
                                         setLastClickedTooltip('address');
                                     }}
-                                    className={`p-2 sm:p-2 transition-colors duration-200 ${isAddressPinned
-                                        ? 'text-accent'
-                                        : 'text-neutral-600 dark:text-neutral-400 hover:text-accent'
+                                    className={`rounded-full p-2.5 transition-colors duration-200 ${isAddressPinned
+                                        ? 'bg-accent/10 text-accent'
+                                        : 'text-neutral-600 hover:bg-neutral-100 hover:text-accent dark:text-neutral-400'
                                         }`}
                                     aria-label={link.name}
                                 >
@@ -235,9 +235,9 @@ export default function Profile({ author, social, features, researchInterests }:
                                         setShowEmail(!isEmailPinned);
                                         setLastClickedTooltip('email');
                                     }}
-                                    className={`p-2 sm:p-2 transition-colors duration-200 ${isEmailPinned
-                                        ? 'text-accent'
-                                        : 'text-neutral-600 dark:text-neutral-400 hover:text-accent'
+                                    className={`rounded-full p-2.5 transition-colors duration-200 ${isEmailPinned
+                                        ? 'bg-accent/10 text-accent'
+                                        : 'text-neutral-600 hover:bg-neutral-100 hover:text-accent dark:text-neutral-400'
                                         }`}
                                     aria-label={link.name}
                                 >
@@ -298,7 +298,7 @@ export default function Profile({ author, social, features, researchInterests }:
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 sm:p-2 text-neutral-600 dark:text-neutral-400 hover:text-accent transition-colors duration-200"
+                            className="rounded-full p-2.5 text-neutral-600 transition-colors duration-200 hover:bg-neutral-100 hover:text-accent dark:text-neutral-400"
                             aria-label={link.name}
                         >
                             <IconComponent className="h-5 w-5" />

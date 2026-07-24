@@ -48,8 +48,8 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="flex items-center justify-center w-10 h-10 rounded-lg border border-neutral-200 dark:border-[rgba(148,163,184,0.24)] bg-background dark:bg-neutral-800">
-        <div className="w-4 h-4 rounded-full bg-neutral-300 animate-pulse" />
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100">
+        <div className="h-4 w-4 animate-pulse rounded-full bg-neutral-300" />
       </div>
     );
   }
@@ -59,8 +59,8 @@ export function ThemeToggle() {
   return (
     <div className="relative">
       <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ opacity: 0.72 }}
+        whileTap={{ scale: 0.96 }}
         type="button"
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => {
@@ -70,11 +70,9 @@ export function ThemeToggle() {
           setTheme(next);
         }}
         className={cn(
-          'flex items-center justify-center w-10 h-10 rounded-lg',
-          'border border-neutral-200 bg-background hover:bg-neutral-50',
-          'dark:border-[rgba(148,163,184,0.24)] dark:bg-neutral-800 dark:hover:bg-neutral-700',
-          'transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50',
-          'text-neutral-600 hover:text-primary dark:text-neutral-400 dark:hover:text-white'
+          'flex h-9 w-9 items-center justify-center rounded-full',
+          'bg-neutral-100 hover:bg-neutral-200 dark:bg-white/10 dark:hover:bg-white/15',
+          'text-neutral-600 transition-all duration-200 hover:text-primary dark:text-neutral-500'
         )}
         title={`${messages.theme.currentTheme}: ${currentTheme.label}. ${messages.theme.cycleTheme}.`}
       >

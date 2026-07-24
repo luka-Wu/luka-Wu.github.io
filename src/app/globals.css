@@ -1,13 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Georgia CDN";
-  src: url("https://jialeliu.com/fonts/georgiab.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-}
-
 /* Explicitly set dark mode to use class strategy */
 @variant dark (&:where(.dark, .dark *));
 
@@ -15,28 +7,28 @@
 :root,
 .light {
   /* Light theme colors */
-  --background: #fefffe;
-  --foreground: #0f172a;
+  --background: #f5f5f7;
+  --foreground: #1d1d1f;
   
-  /* Brand colors - Deep Navy & Gold */
-  --primary: #1e293b;
-  --primary-light: #334155;
-  --primary-dark: #0f172a;
-  --accent: #d4a562;
-  --accent-light: #e4b976;
-  --accent-dark: #b8914d;
+  /* Apple-inspired neutrals and system blue */
+  --primary: #1d1d1f;
+  --primary-light: #424245;
+  --primary-dark: #000000;
+  --accent: #0071e3;
+  --accent-light: #2997ff;
+  --accent-dark: #0058b0;
   
   /* Neutral colors */
-  --neutral-50: #f8fafc;
-  --neutral-100: #f1f5f9;
-  --neutral-200: #e2e8f0;
-  --neutral-300: #cbd5e1;
-  --neutral-400: #94a3b8;
-  --neutral-500: #64748b;
-  --neutral-600: #475569;
-  --neutral-700: #334155;
-  --neutral-800: #1e293b;
-  --neutral-900: #0f172a;
+  --neutral-50: #fbfbfd;
+  --neutral-100: #f5f5f7;
+  --neutral-200: #e8e8ed;
+  --neutral-300: #d2d2d7;
+  --neutral-400: #a1a1a6;
+  --neutral-500: #86868b;
+  --neutral-600: #6e6e73;
+  --neutral-700: #424245;
+  --neutral-800: #2c2c2e;
+  --neutral-900: #1d1d1f;
   
   /* Semantic colors */
   --success: #10b981;
@@ -45,9 +37,9 @@
   --info: #3b82f6;
   
   /* Glass effect */
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.08);
 }
 
 @theme inline {
@@ -85,8 +77,8 @@
   --color-glass-shadow: var(--glass-shadow);
   
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Georgia CDN', Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
   --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   
   /* Font sizes */
@@ -121,14 +113,14 @@
   --line-height-loose: 2;
   
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.1);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --shadow-glass: 0 12px 40px rgba(0, 0, 0, 0.08);
   
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -139,38 +131,38 @@
 /* Use Source Han Serif for Chinese headings/title text via .font-serif */
 html:lang(zh),
 html[data-locale^="zh"] {
-  --font-serif: "Source Han Serif SC", "Source Han Serif CN", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
+  --font-serif: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Dark mode styles */
 .dark {
-  --background: #0f172a;
-  --foreground: #f8fafc;
+  --background: #000000;
+  --foreground: #f5f5f7;
   
   /* Adjust colors for dark mode */
-  --primary: #f8fafc;
-  --primary-light: #e2e8f0;
-  --primary-dark: #cbd5e1;
-  --accent: #e4b976;
-  --accent-light: #f0c674;
-  --accent-dark: #d4a562;
+  --primary: #f5f5f7;
+  --primary-light: #d2d2d7;
+  --primary-dark: #ffffff;
+  --accent: #2997ff;
+  --accent-light: #64b5ff;
+  --accent-dark: #0071e3;
   
   /* Dark mode glass effect */
-  --glass-bg: rgba(15, 23, 42, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(28, 28, 30, 0.76);
+  --glass-border: rgba(255, 255, 255, 0.12);
   --glass-shadow: rgba(0, 0, 0, 0.5);
   
   /* Neutral colors for dark mode - properly inverted */
-  --neutral-50: #0f172a;
-  --neutral-100: #1e293b;
-  --neutral-200: #334155;
-  --neutral-300: #475569;
-  --neutral-400: #64748b;
-  --neutral-500: #94a3b8;
-  --neutral-600: #cbd5e1;
-  --neutral-700: #e2e8f0;
-  --neutral-800: #1e293b;
-  --neutral-900: #0f172a;
+  --neutral-50: #111113;
+  --neutral-100: #1c1c1e;
+  --neutral-200: #2c2c2e;
+  --neutral-300: #3a3a3c;
+  --neutral-400: #636366;
+  --neutral-500: #8e8e93;
+  --neutral-600: #aeaeb2;
+  --neutral-700: #d1d1d6;
+  --neutral-800: #e5e5ea;
+  --neutral-900: #f5f5f7;
 }
 
 
@@ -178,10 +170,25 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  line-height: var(--line-height-normal);
+  line-height: 1.6;
   font-weight: 400;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 3px;
 }
 
 /* Typography utilities */
@@ -208,8 +215,23 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-glass);
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding: 1.5rem;
+}
+
+.apple-surface {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+.apple-card {
+  background: color-mix(in srgb, var(--glass-bg) 88%, var(--background));
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
 /* Custom scrollbar */
