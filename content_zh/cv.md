@@ -14,6 +14,7 @@
 - 主持省级大学生创新创业训练计划项目 1 项
 - 参与国家自然科学基金项目及教育部人文社会科学研究青年基金项目
 - 一篇论文被 *Current Psychology* 录用（2024 Journal Impact Factor：2.6）
+- 一篇共同第一作者论文投稿至 *Digital Health*（SSCI/SCI Q1，IF：3.3），目前处于审稿阶段
 - 论文获 ICA、NCA、AEJMC 接收，共获 3 项 Top Student Paper 奖励
 - ICA、NCA、AEJMC、IAMCR 审稿人
 
