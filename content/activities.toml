@@ -1,0 +1,4 @@
+type = "text"
+title = "社会活动"
+description = "实习实践、社会实践、志愿活动与社会工作。"
+source = "activities.md"

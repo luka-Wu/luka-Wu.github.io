@@ -1,4 +1,4 @@
-type = "publication"
-title = "Publications"
-description = "A collection of my research work."
-source = "publications.bib"
+type = "text"
+title = "学术发表"
+description = "科研项目、论文成果、学术会议与学术服务。"
+source = "academic.md"

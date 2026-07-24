@@ -1,82 +1,66 @@
 [site]
-title = "Jiale Liu"
-description = "PhD student at the University of Example."
+title = "吴洋洋"
+description = "吴洋洋的个人主页，记录学习、项目与成长。"
 favicon = "/favicon.svg"
-last_updated = "November 18, 2025"
+last_updated = "2026年7月24日"
 
 [author]
-name = "Jiale Liu"
-title = "PhD Student"
-institution = "University of Example"
-avatar = "/bio.jpg"
+name = "吴洋洋"
+title = ""
+institution = ""
+avatar = "/avatar.svg"
 
 [social]
 # Contact information (leave blank or delete to hide)
 
-email = "john.doe@example.com"
-location = "City, Country"
-location_url = "https://maps.google.com"
-location_details = [
-  "Room 123, Science Building,",
-  "University Avenue, City, Country"
-]
-google_scholar = "https://scholar.google.com"
-orcid = "https://orcid.org"
-github = "https://github.com"
-linkedin = "https://linkedin.com"
+email = "2379702630@qq.com"
 
 [features]
 # Show a like button on the about page
-enable_likes = true
+enable_likes = false
 
 # Display all subpages on a single page
 enable_one_page_mode = false
 
 [i18n]
-enabled = true
-locales = ["zh", "en"]
-default_locale = "en"
+enabled = false
+locales = ["zh"]
+default_locale = "zh"
 # "auto" means the locale will be determined by the browser's language setting, "fixed" means the locale will be fixed to the default locale (but can be switched still, if you want to disable, set "enable=false")
-mode = "auto"
-fixed_locale = "en"
+mode = "fixed"
+fixed_locale = "zh"
 # If true, PRISM will remember user's language preference in browser's localStorage
-persist = true
+persist = false
 # Show a language switcher on the top right corner
-switcher = true
+switcher = false
 
 [i18n.labels]
 zh = "中文"
 en = "English"
 
 [[navigation]]
-title = "About"
+title = "个人介绍"
 type = "page"
 target = "about"
 href = "/"
 
 [[navigation]]
-title = "Publications"
+title = "学术发表"
 type = "page"
 target = "publications"
 href = "/publications"
 
 [[navigation]]
-title = "Teaching"
+title = "社会活动"
 type = "page"
-target = "teaching"
-href = "/teaching"
+target = "activities"
+href = "/activities"
 
 [[navigation]]
-title = "Awards"
+title = "荣誉奖项"
 type = "page"
-target = "awards"
-href = "/awards"
-
-[[navigation]]
-title = "Services"
-type = "page"
-target = "services"
-href = "/services"
+target = "honors"
+href = "/honors"
 
 [[navigation]]
 title = "CV"

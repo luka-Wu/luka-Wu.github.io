@@ -1,52 +1,42 @@
 [site]
-title = "刘嘉乐"
-description = "某某大学博士生个人主页。"
-last_updated = "2025年11月18日"
+title = "吴洋洋"
+description = "吴洋洋的个人主页，记录学习、项目与成长。"
+last_updated = "2026年7月24日"
 
 [author]
-name = "刘嘉乐"
-title = "博士生"
-institution = "某某大学"
+name = "吴洋洋"
+title = ""
+institution = ""
 
 [social]
-location = "城市，国家"
-location_details = [
-  "理科楼 123 室，",
-  "大学路，城市，国家"
-]
+email = "2379702630@qq.com"
 
 [[navigation]]
-title = "关于我"
+title = "个人介绍"
 type = "page"
 target = "about"
 href = "/"
 
 [[navigation]]
-title = "论文"
+title = "学术发表"
 type = "page"
 target = "publications"
 href = "/publications"
 
 [[navigation]]
-title = "教学"
+title = "社会活动"
 type = "page"
-target = "teaching"
-href = "/teaching"
+target = "activities"
+href = "/activities"
 
 [[navigation]]
-title = "奖项"
+title = "荣誉奖项"
 type = "page"
-target = "awards"
-href = "/awards"
+target = "honors"
+href = "/honors"
 
 [[navigation]]
-title = "服务"
-type = "page"
-target = "services"
-href = "/services"
-
-[[navigation]]
-title = "简历"
+title = "CV"
 type = "page"
 target = "cv"
 href = "/cv"
