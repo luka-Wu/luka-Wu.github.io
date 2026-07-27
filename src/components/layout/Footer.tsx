@@ -20,10 +20,11 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
     new Date().toLocaleDateString(locale || 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <footer className="border-t border-neutral-200/70 bg-background dark:border-white/10">
-      <div className="mx-auto max-w-6xl px-5 py-8 sm:px-6 lg:px-8">
+    <footer className="px-4 pb-5 pt-8">
+      <div className="mx-auto max-w-6xl rounded-[1.5rem] border border-white/60 bg-white/32 px-5 py-6 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.03] sm:px-7">
         <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <p className="text-xs tracking-wide text-neutral-500">
+          <p className="flex items-center gap-2 text-xs tracking-wide text-neutral-500">
+            <span className="h-2 w-2 rounded-full bg-mint" />
             {messages.footer.lastUpdated}: {resolvedLastUpdated}
           </p>
           <p className="flex items-center text-xs text-neutral-500">

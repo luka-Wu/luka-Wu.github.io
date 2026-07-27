@@ -48,7 +48,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/45 dark:border-white/10 dark:bg-white/10">
         <div className="h-4 w-4 animate-pulse rounded-full bg-neutral-300" />
       </div>
     );
@@ -70,9 +70,9 @@ export function ThemeToggle() {
           setTheme(next);
         }}
         className={cn(
-          'flex h-9 w-9 items-center justify-center rounded-full',
-          'bg-neutral-100 hover:bg-neutral-200 dark:bg-white/10 dark:hover:bg-white/15',
-          'text-neutral-600 transition-all duration-200 hover:text-primary dark:text-neutral-500'
+          'flex h-9 w-9 items-center justify-center rounded-full border border-white/60',
+          'bg-white/45 shadow-sm hover:bg-accent/10 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15',
+          'text-neutral-600 transition-all duration-200 hover:text-accent dark:text-neutral-500'
         )}
         title={`${messages.theme.currentTheme}: ${currentTheme.label}. ${messages.theme.cycleTheme}.`}
       >

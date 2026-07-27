@@ -18,6 +18,12 @@ target = "about"
 href = "/"
 
 [[navigation]]
+title = "实习经历"
+type = "page"
+target = "internships"
+href = "/internships"
+
+[[navigation]]
 title = "学术发表"
 type = "page"
 target = "publications"

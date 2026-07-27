@@ -37,7 +37,12 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
             transition={{ duration: 0.6, delay: 0.4 }}
         >
             <div className={embedded ? "mb-4" : "mb-8"}>
-                <h1 className={`${embedded ? "text-2xl" : "text-4xl"} font-serif font-bold text-primary mb-4`}>{config.title}</h1>
+                <div className="mb-5 flex items-center gap-3">
+                    <span className="h-2.5 w-2.5 rotate-12 rounded-[3px] bg-coral" />
+                    <span className="h-px w-10 bg-accent/35" />
+                    <span className="text-[10px] font-semibold tracking-[0.22em] text-neutral-500">PORTFOLIO</span>
+                </div>
+                <h1 className={`${embedded ? "text-2xl" : "text-[2.75rem] sm:text-6xl"} mb-4 font-semibold leading-none tracking-[-0.045em] text-primary`}>{config.title}</h1>
                 {config.description && (
                     <div className={`${embedded ? "text-base" : "text-lg"} text-neutral-600 dark:text-neutral-500 max-w-2xl leading-relaxed`}>
                         <ReactMarkdown components={markdownComponents}>
@@ -47,19 +52,19 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
                 )}
             </div>
 
-            <div className={`grid ${embedded ? "gap-4" : "gap-6"}`}>
+            <div className={`grid ${embedded ? "gap-4" : "gap-5 sm:grid-cols-2"}`}>
                 {config.items.map((item, index) => (
                     <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.1 * index }}
-                        className={`bg-white dark:bg-neutral-900 ${embedded ? "p-4" : "p-6"} rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]`}
+                        className={`group border border-white/70 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-white/5 ${embedded ? "p-4" : "p-6"} rounded-[1.5rem] shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(83,61,119,0.12)]`}
                     >
                         <div className="flex justify-between items-start mb-2">
                             <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary`}>{item.title}</h3>
                             {item.date && (
-                                <span className="text-sm text-neutral-500 font-medium bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">
+                                <span className="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent">
                                     {item.date}
                                 </span>
                             )}
@@ -77,7 +82,7 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
                         {item.tags && (
                             <div className="flex flex-wrap gap-2 mt-4">
                                 {item.tags.map(tag => (
-                                    <span key={tag} className="text-xs text-neutral-500 bg-neutral-50 dark:bg-neutral-800/50 px-2 py-1 rounded border border-neutral-100 dark:border-neutral-800">
+                                    <span key={tag} className="rounded-full border border-accent/10 bg-accent/[0.045] px-2.5 py-1 text-xs text-neutral-600">
                                         {tag}
                                     </span>
                                 ))}

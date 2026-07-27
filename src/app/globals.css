@@ -6,29 +6,30 @@
 /* Default to light theme colors - no system preference detection */
 :root,
 .light {
-  /* Light theme colors */
-  --background: #fffaf6;
-  --foreground: #24231f;
+  --background: #fffaf7;
+  --foreground: #232127;
   
-  /* Apple-inspired neutrals and system blue */
-  --primary: #24231f;
-  --primary-light: #4a4740;
-  --primary-dark: #11110f;
-  --accent: #7b61d1;
-  --accent-light: #a38ce8;
-  --accent-dark: #5c43b2;
+  --primary: #232127;
+  --primary-light: #514d58;
+  --primary-dark: #151318;
+  --accent: #6c5ce7;
+  --accent-light: #a594ff;
+  --accent-dark: #5141ca;
+  --coral: #ff7186;
+  --mint: #40cbb5;
+  --sun: #f4c95d;
   
   /* Neutral colors */
   --neutral-50: #fffdfb;
-  --neutral-100: #f8f4ef;
-  --neutral-200: #eae3dc;
-  --neutral-300: #d7cdc3;
-  --neutral-400: #aca198;
-  --neutral-500: #817970;
-  --neutral-600: #686057;
-  --neutral-700: #4d4842;
-  --neutral-800: #35322e;
-  --neutral-900: #24231f;
+  --neutral-100: #f8f3ee;
+  --neutral-200: #e9e1da;
+  --neutral-300: #d7cbc2;
+  --neutral-400: #aa9f98;
+  --neutral-500: #7d756f;
+  --neutral-600: #655f5a;
+  --neutral-700: #4b4643;
+  --neutral-800: #34302f;
+  --neutral-900: #232127;
   
   /* Semantic colors */
   --success: #10b981;
@@ -37,9 +38,9 @@
   --info: #3b82f6;
   
   /* Glass effect */
-  --glass-bg: rgba(255, 253, 249, 0.78);
-  --glass-border: rgba(76, 62, 45, 0.1);
-  --glass-shadow: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 253, 250, 0.78);
+  --glass-border: rgba(63, 50, 72, 0.1);
+  --glass-shadow: rgba(69, 50, 107, 0.1);
 }
 
 @theme inline {
@@ -52,6 +53,9 @@
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
   --color-accent-dark: var(--accent-dark);
+  --color-coral: var(--coral);
+  --color-mint: var(--mint);
+  --color-sun: var(--sun);
   
   /* Neutral palette */
   --color-neutral-50: var(--neutral-50);
@@ -136,20 +140,23 @@ html[data-locale^="zh"] {
 
 /* Dark mode styles */
 .dark {
-  --background: #000000;
-  --foreground: #f5f5f7;
+  --background: #111014;
+  --foreground: #f7f3ef;
   
   /* Adjust colors for dark mode */
-  --primary: #f5f5f7;
-  --primary-light: #d2d2d7;
+  --primary: #f7f3ef;
+  --primary-light: #d8d1db;
   --primary-dark: #ffffff;
-  --accent: #2997ff;
-  --accent-light: #64b5ff;
-  --accent-dark: #0071e3;
+  --accent: #a594ff;
+  --accent-light: #c9bfff;
+  --accent-dark: #8475ee;
+  --coral: #ff8798;
+  --mint: #67dac8;
+  --sun: #ffd876;
   
   /* Dark mode glass effect */
-  --glass-bg: rgba(28, 28, 30, 0.76);
-  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-bg: rgba(29, 27, 34, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.11);
   --glass-shadow: rgba(0, 0, 0, 0.5);
   
   /* Neutral colors for dark mode - properly inverted */
@@ -168,9 +175,9 @@ html[data-locale^="zh"] {
 
 body {
   background:
-    radial-gradient(circle at 8% 2%, rgba(255, 184, 210, 0.42), transparent 30rem),
-    radial-gradient(circle at 88% 8%, rgba(232, 236, 135, 0.38), transparent 34rem),
-    radial-gradient(circle at 96% 64%, rgba(123, 226, 218, 0.34), transparent 30rem),
+    radial-gradient(circle at 8% 2%, color-mix(in srgb, var(--coral) 25%, transparent), transparent 30rem),
+    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--sun) 27%, transparent), transparent 34rem),
+    radial-gradient(circle at 96% 64%, color-mix(in srgb, var(--mint) 22%, transparent), transparent 30rem),
     var(--background);
   background-attachment: fixed;
   color: var(--foreground);
@@ -233,24 +240,24 @@ button {
 }
 
 .apple-card {
-  background: color-mix(in srgb, var(--glass-bg) 88%, var(--background));
+  background: color-mix(in srgb, var(--glass-bg) 90%, var(--background));
   border: 1px solid var(--glass-border);
-  border-radius: 1.5rem;
-  box-shadow: var(--shadow-sm);
+  border-radius: 1.75rem;
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--glass-shadow) 68%, transparent);
 }
 
 .portfolio-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 2rem;
+  border: 1px solid color-mix(in srgb, white 72%, var(--glass-border));
+  border-radius: 2.25rem;
   background:
-    radial-gradient(circle at 4% 6%, rgba(255, 174, 205, 0.52), transparent 28rem),
-    radial-gradient(circle at 62% 0%, rgba(255, 238, 164, 0.52), transparent 30rem),
-    radial-gradient(circle at 100% 80%, rgba(108, 221, 218, 0.5), transparent 32rem),
-    rgba(255, 252, 245, 0.72);
-  box-shadow: 0 30px 80px rgba(92, 67, 178, 0.1);
+    radial-gradient(circle at 2% 4%, color-mix(in srgb, var(--coral) 36%, transparent), transparent 26rem),
+    radial-gradient(circle at 64% 0%, color-mix(in srgb, var(--sun) 38%, transparent), transparent 31rem),
+    radial-gradient(circle at 100% 88%, color-mix(in srgb, var(--mint) 32%, transparent), transparent 34rem),
+    color-mix(in srgb, var(--glass-bg) 80%, transparent);
+  box-shadow: 0 32px 90px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .portfolio-hero::before,
@@ -265,13 +272,95 @@ button {
 }
 
 .portfolio-hero::before {
-  top: 8%;
-  right: 6%;
+  top: 9%;
+  right: 7%;
+  background: color-mix(in srgb, var(--sun) 18%, transparent);
 }
 
 .portfolio-hero::after {
   bottom: -3rem;
   left: -3rem;
+  background: color-mix(in srgb, var(--coral) 16%, transparent);
+}
+
+.portfolio-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--primary) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--primary) 4%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to bottom right, black, transparent 72%);
+}
+
+.portfolio-kicker {
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--glass-border));
+  background: color-mix(in srgb, var(--glass-bg) 86%, transparent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 9%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.portfolio-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.7rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.portfolio-button:hover {
+  transform: translateY(-2px);
+}
+
+.portfolio-button-primary {
+  color: white;
+  background: var(--primary);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.portfolio-button-secondary {
+  color: var(--primary);
+  border: 1px solid var(--glass-border);
+  background: color-mix(in srgb, var(--glass-bg) 88%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.portfolio-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--glass-border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-bg) 78%, transparent);
+  padding: 0.45rem 0.75rem;
+  color: var(--neutral-600);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.page-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 25rem),
+    color-mix(in srgb, var(--glass-bg) 88%, var(--background));
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--glass-shadow) 64%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Custom scrollbar */

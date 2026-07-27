@@ -8,7 +8,7 @@ last_updated = "2026年7月24日"
 name = "吴洋洋"
 title = ""
 institution = ""
-avatar = "/avatar-photo.png"
+avatar = "/avatar-photo-cutout.png"
 
 [social]
 # Contact information (leave blank or delete to hide)
@@ -43,6 +43,12 @@ title = "个人介绍"
 type = "page"
 target = "about"
 href = "/"
+
+[[navigation]]
+title = "实习经历"
+type = "page"
+target = "internships"
+href = "/internships"
 
 [[navigation]]
 title = "学术发表"

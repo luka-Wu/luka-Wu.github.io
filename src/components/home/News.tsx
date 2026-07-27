@@ -22,14 +22,17 @@ export default function News({ items, title }: NewsProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.2 }}
-            className="apple-card p-6 sm:p-8"
+            className="apple-card relative overflow-hidden p-6 sm:p-8"
         >
-            <h2 className="mb-6 text-2xl font-semibold tracking-tight text-primary">{resolvedTitle}</h2>
-            <div className="divide-y divide-neutral-200 dark:divide-white/10">
+            <span aria-hidden="true" className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-sun/18" />
+            <h2 className="relative mb-6 text-2xl font-semibold tracking-tight text-primary">{resolvedTitle}</h2>
+            <div className="relative">
+                <div className="absolute bottom-3 left-[6.1rem] top-3 w-px bg-gradient-to-b from-accent/70 via-accent/30 to-transparent" />
                 {items.map((item, index) => (
-                    <div key={index} className="grid gap-1 py-4 first:pt-0 last:pb-0 sm:grid-cols-[5rem_minmax(0,1fr)] sm:gap-4">
-                        <span className="text-sm font-medium text-neutral-500">{item.date}</span>
-                        <p className="text-[15px] leading-7 text-neutral-700">{item.content}</p>
+                    <div key={index} className="relative grid grid-cols-[5.5rem_1.25rem_minmax(0,1fr)] gap-2 py-3 first:pt-0 last:pb-0">
+                        <span className="pt-0.5 text-right text-xs font-semibold tracking-tight text-neutral-500">{item.date}</span>
+                        <span className="relative z-10 mt-1.5 h-3 w-3 justify-self-center rounded-full border-2 border-background bg-accent shadow-[0_0_0_3px_rgba(108,92,231,0.14)]" />
+                        <p className="text-[15px] leading-6 text-neutral-700">{item.content}</p>
                     </div>
                 ))}
             </div>

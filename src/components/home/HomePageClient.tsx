@@ -55,7 +55,11 @@ export default function HomePageClient({ dataByLocale, defaultLocale }: HomePage
 
   return (
     <div className="portfolio-hero mx-auto min-h-[calc(100vh-7rem)] max-w-6xl px-6 py-8 sm:px-10 sm:py-12 lg:px-14 lg:py-16">
-      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] lg:gap-10 xl:gap-16">
+      <div aria-hidden="true" className="portfolio-grid pointer-events-none absolute inset-0 opacity-70" />
+      <div className="pointer-events-none absolute right-7 top-7 hidden rotate-2 rounded-full border border-primary/10 bg-white/35 px-4 py-2 text-[10px] font-semibold tracking-[0.22em] text-neutral-600 backdrop-blur-sm sm:block">
+        RESEARCH · MEDIA · PRACTICE
+      </div>
+      <div className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(19rem,0.85fr)] lg:gap-8 xl:gap-14">
         <div className="order-2 lg:order-2">
           <Profile
             author={data.author}
@@ -65,7 +69,7 @@ export default function HomePageClient({ dataByLocale, defaultLocale }: HomePage
           />
         </div>
 
-        <div className="order-1 min-w-0 space-y-10 lg:order-1">
+        <div className="order-1 min-w-0 space-y-10 lg:order-1 lg:py-8">
           {data.pagesToShow.map((page) => (
             <section key={page.id} id={page.id} className="scroll-mt-24 space-y-10">
               {page.type === 'about' && page.sections.map((section: SectionConfig) => {

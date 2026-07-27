@@ -109,16 +109,19 @@ export default function Profile({ author, social, features, researchInterests }:
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
-            className="relative mx-auto flex max-w-sm flex-col items-center lg:-mt-10 lg:max-w-none lg:self-start"
+            className="relative mx-auto flex max-w-sm flex-col items-center lg:-mt-2 lg:max-w-none lg:self-start"
         >
             {/* Profile Image */}
-            <div className="relative mx-auto -mb-2 h-[28rem] w-full max-w-[24rem] transition-transform duration-300 hover:-translate-y-1 lg:h-[34rem]">
+            <div className="group relative mx-auto -mb-2 h-[27rem] w-full max-w-[24rem] transition-transform duration-300 hover:-translate-y-1 sm:h-[30rem] lg:h-[34rem]">
+                <div aria-hidden="true" className="absolute inset-x-[8%] bottom-[4%] top-[15%] rotate-3 rounded-[45%_55%_48%_52%/42%_42%_58%_58%] bg-gradient-to-br from-coral/35 via-sun/40 to-mint/40 blur-[1px] transition-transform duration-500 group-hover:rotate-1 group-hover:scale-[1.02]" />
+                <div aria-hidden="true" className="absolute right-[2%] top-[20%] h-20 w-20 rounded-full border border-white/70 bg-white/25 backdrop-blur-sm" />
+                <div aria-hidden="true" className="absolute bottom-[9%] left-[3%] h-12 w-12 rotate-12 rounded-2xl bg-accent/20 backdrop-blur-sm" />
                 <Image
                     src={author.avatar}
                     alt={author.name}
                     width={256}
                     height={256}
-                    className="h-full w-full object-contain object-bottom drop-shadow-[0_30px_35px_rgba(92,67,178,0.16)] mix-blend-multiply dark:mix-blend-normal"
+                    className="relative z-10 h-full w-full object-contain object-bottom drop-shadow-[0_30px_35px_rgba(92,67,178,0.2)]"
                     priority
                 />
             </div>
@@ -141,7 +144,7 @@ export default function Profile({ author, social, features, researchInterests }:
             </div>
 
             {/* Contact Links */}
-            <div className="relative flex flex-wrap justify-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-1 shadow-sm backdrop-blur-md">
+            <div className="relative z-20 -mt-1 flex flex-wrap justify-center gap-2 rounded-full border border-white/70 bg-white/62 px-3 py-1 shadow-[0_12px_34px_rgba(66,48,91,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-white/10">
                 {socialLinks.map((link) => {
                     const IconComponent = link.icon;
                     if (link.isLocation) {

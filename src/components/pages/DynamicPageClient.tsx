@@ -31,17 +31,20 @@ export default function DynamicPageClient({ dataByLocale, defaultLocale }: Dynam
   }
 
   return (
-    <div className="mx-auto min-h-screen max-w-5xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-      <div className="apple-card mx-auto max-w-4xl p-6 sm:p-10 lg:p-12">
-        {pageData.type === 'publication' && (
-          <PublicationsList config={pageData.config} publications={pageData.publications} />
-        )}
-        {pageData.type === 'text' && (
-          <TextPage config={pageData.config} content={pageData.content} />
-        )}
-        {pageData.type === 'card' && (
-          <CardPage config={pageData.config} />
-        )}
+    <div className="mx-auto min-h-screen max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <div className="page-shell p-6 sm:p-10 lg:p-14">
+        <div aria-hidden="true" className="portfolio-grid pointer-events-none absolute inset-0 opacity-35" />
+        <div className="relative mx-auto max-w-4xl">
+          {pageData.type === 'publication' && (
+            <PublicationsList config={pageData.config} publications={pageData.publications} />
+          )}
+          {pageData.type === 'text' && (
+            <TextPage config={pageData.config} content={pageData.content} />
+          )}
+          {pageData.type === 'card' && (
+            <CardPage config={pageData.config} />
+          )}
+        </div>
       </div>
     </div>
   );

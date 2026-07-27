@@ -9,9 +9,3 @@ id = "about"
 type = "markdown"
 source = "bio.md"
 title = "关于我"
-
-[[sections]]
-id = "news"
-type = "list"
-title = "最近动态"
-source = "news.toml"

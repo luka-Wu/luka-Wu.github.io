@@ -66,7 +66,12 @@ export default function PublicationsList({ config, publications, embedded = fals
             transition={{ duration: 0.6, delay: 0.4 }}
         >
             <div className="mb-8">
-                <h1 className={`${embedded ? "text-2xl" : "text-4xl"} font-serif font-bold text-primary mb-4`}>{config.title}</h1>
+                <div className="mb-5 flex items-center gap-3">
+                    <span className="h-2.5 w-2.5 rotate-12 rounded-[3px] bg-coral" />
+                    <span className="h-px w-10 bg-accent/35" />
+                    <span className="text-[10px] font-semibold tracking-[0.22em] text-neutral-500">PUBLICATIONS</span>
+                </div>
+                <h1 className={`${embedded ? "text-2xl" : "text-[2.75rem] sm:text-6xl"} mb-4 font-semibold leading-none tracking-[-0.045em] text-primary`}>{config.title}</h1>
                 {config.description && (
                     <p className={`${embedded ? "text-base" : "text-lg"} text-neutral-600 dark:text-neutral-500 max-w-2xl`}>
                         {config.description}
@@ -85,16 +90,16 @@ export default function PublicationsList({ config, publications, embedded = fals
                             placeholder={messages.publications.searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200"
+                            className="w-full rounded-2xl border border-white/70 bg-white/60 py-3 pl-10 pr-4 backdrop-blur-md transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-accent dark:border-white/10 dark:bg-white/5"
                         />
                     </div>
                     <button
                         onClick={() => setShowFilters(!showFilters)}
                         className={cn(
-                            "flex items-center justify-center px-4 py-2 rounded-lg border transition-all duration-200",
+                            "flex items-center justify-center rounded-2xl border px-4 py-3 font-medium transition-all duration-200",
                             showFilters
                                 ? "bg-accent text-white border-accent"
-                                : "bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-neutral-600 hover:border-accent hover:text-accent"
+                                : "border-white/70 bg-white/60 text-neutral-600 backdrop-blur-md hover:border-accent hover:text-accent dark:border-white/10 dark:bg-white/5"
                         )}
                     >
                         <FunnelIcon className="h-5 w-5 mr-2" />
@@ -197,7 +202,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 * index }}
-                            className="bg-white dark:bg-neutral-900 p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-md transition-all duration-200"
+                            className="rounded-[1.5rem] border border-white/70 bg-white/58 p-6 shadow-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(83,61,119,0.12)] dark:border-white/10 dark:bg-white/5"
                         >
                             <div className="flex flex-col md:flex-row gap-6">
                                 {pub.preview && (

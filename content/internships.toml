@@ -1,0 +1,5 @@
+type = "text"
+title = "实习经历"
+description = "媒体实践与交流学习经历。"
+source = "internships.md"
+layout = "timeline"
