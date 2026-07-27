@@ -87,6 +87,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                         <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
                         <input
                             type="text"
+                            aria-label={messages.publications.searchPlaceholder}
                             placeholder={messages.publications.searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -95,6 +96,8 @@ export default function PublicationsList({ config, publications, embedded = fals
                     </div>
                     <button
                         onClick={() => setShowFilters(!showFilters)}
+                        aria-expanded={showFilters}
+                        aria-controls="publication-filters"
                         className={cn(
                             "flex items-center justify-center rounded-2xl border px-4 py-3 font-medium transition-all duration-200",
                             showFilters
@@ -115,7 +118,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                             exit={{ opacity: 0, height: 0 }}
                             className="overflow-hidden"
                         >
-                            <div className="p-4 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-800 flex flex-wrap gap-6">
+                            <div id="publication-filters" className="p-4 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-800 flex flex-wrap gap-6">
                                 {/* Year Filter */}
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 flex items-center">
@@ -124,6 +127,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                     <div className="flex flex-wrap gap-2">
                                         <button
                                             onClick={() => setSelectedYear('all')}
+                                            aria-pressed={selectedYear === 'all'}
                                             className={cn(
                                                 "px-3 py-1 text-xs rounded-full transition-colors",
                                                 selectedYear === 'all'
@@ -137,6 +141,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                             <button
                                                 key={year}
                                                 onClick={() => setSelectedYear(year)}
+                                                aria-pressed={selectedYear === year}
                                                 className={cn(
                                                     "px-3 py-1 text-xs rounded-full transition-colors",
                                                     selectedYear === year
@@ -158,6 +163,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                     <div className="flex flex-wrap gap-2">
                                         <button
                                             onClick={() => setSelectedType('all')}
+                                            aria-pressed={selectedType === 'all'}
                                             className={cn(
                                                 "px-3 py-1 text-xs rounded-full transition-colors",
                                                 selectedType === 'all'
@@ -171,6 +177,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                             <button
                                                 key={type}
                                                 onClick={() => setSelectedType(type)}
+                                                aria-pressed={selectedType === type}
                                                 className={cn(
                                                     "px-3 py-1 text-xs rounded-full capitalize transition-colors",
                                                     selectedType === type

@@ -74,6 +74,7 @@ export function ThemeToggle() {
           'bg-white/45 shadow-sm hover:bg-accent/10 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15',
           'text-neutral-600 transition-all duration-200 hover:text-accent dark:text-neutral-500'
         )}
+        aria-label={`${messages.theme.currentTheme}: ${currentTheme.label}. ${messages.theme.cycleTheme}.`}
         title={`${messages.theme.currentTheme}: ${currentTheme.label}. ${messages.theme.cycleTheme}.`}
       >
         <motion.div
@@ -131,6 +132,8 @@ export function ThemeToggleDropdown() {
           'transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50',
           'text-neutral-600 hover:text-primary dark:text-neutral-400 dark:hover:text-white'
         )}
+        aria-label={`${messages.theme.currentTheme}: ${currentTheme.label}`}
+        aria-expanded={isOpen}
         title={`${messages.theme.currentTheme}: ${currentTheme.label}`}
       >
         <motion.div

@@ -189,6 +189,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .glass,
+  .glass-card,
+  .apple-surface {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
 ::selection {
   background: color-mix(in srgb, var(--accent) 22%, transparent);
 }
@@ -313,6 +326,10 @@ button {
 
 .portfolio-button:hover {
   transform: translateY(-2px);
+}
+
+.portfolio-button:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .portfolio-button-primary {

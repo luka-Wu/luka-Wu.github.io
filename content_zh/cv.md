@@ -1,8 +1,12 @@
 ## 教育经历
 
-- [北京大学新闻与传播学院](https://sjc.pku.edu.cn/)｜推免录取
-- [武汉大学新闻与传播学院](https://journal.whu.edu.cn/)｜2022 级广告学本科
+- [北京大学新闻与传播学院](https://sjc.pku.edu.cn/)｜研究生
+- [武汉大学新闻与传播学院](https://journal.whu.edu.cn/)｜广告学本科毕业
   - 连续三年综合测评第一，以推免综合成绩第一保研至北京大学，为全院唯一
+- [湖南省长沙市第一中学](http://www.hnfms.com.cn/)｜高中
+- [长沙青竹湖湘一外国语学校](https://mp.weixin.qq.com/s/V0Pu9BUwk3b1VO1TBUiuBg)｜初中
+
+[查看求学地图](/education-journey/)
 
 ## 研究兴趣
 
@@ -13,7 +17,7 @@
 
 - 主持省级大学生创新创业训练计划项目 1 项
 - 参与国家自然科学基金项目及教育部人文社会科学研究青年基金项目
-- 一篇论文被 *Current Psychology* 录用（2024 Journal Impact Factor：2.6）
+- 一篇论文被 *Current Psychology* 录用（IF：2.6）
 - 一篇共同第一作者论文投稿至 *Digital Health*（SSCI/SCI Q1，IF：3.3），目前处于审稿阶段
 - 论文获 ICA、NCA、AEJMC 接收，共获 3 项 Top Student Paper 奖励
 - ICA、NCA、AEJMC、IAMCR 审稿人

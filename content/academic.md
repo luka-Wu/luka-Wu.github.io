@@ -6,7 +6,7 @@
 
 ## 论文成果
 
-1. 一篇论文已被 SSCI Q1 期刊 *Current Psychology* 录用（Springer，2024 Journal Impact Factor：2.6）
+1. 一篇论文已被 SSCI Q1 期刊 *Current Psychology* 录用（IF：2.6）
 2. 一篇共同第一作者论文投稿至 *Digital Health*（SSCI/SCI Q1，IF：3.3），目前处于审稿阶段
 
 ## 国际学术会议

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import {
     EnvelopeIcon,
@@ -36,6 +36,7 @@ interface ProfileProps {
 
 export default function Profile({ author, social, features, researchInterests }: ProfileProps) {
     const messages = useMessages();
+    const prefersReducedMotion = useReducedMotion();
 
     const [hasLiked, setHasLiked] = useState(false);
     const [showThanks, setShowThanks] = useState(false);
@@ -106,42 +107,40 @@ export default function Profile({ author, social, features, researchInterests }:
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.45 }}
             className="relative mx-auto flex max-w-sm flex-col items-center lg:-mt-2 lg:max-w-none lg:self-start"
         >
             {/* Profile Image */}
-            <div className="group relative mx-auto -mb-2 h-[27rem] w-full max-w-[24rem] transition-transform duration-300 hover:-translate-y-1 sm:h-[30rem] lg:h-[34rem]">
-                <div aria-hidden="true" className="absolute inset-x-[8%] bottom-[4%] top-[15%] rotate-3 rounded-[45%_55%_48%_52%/42%_42%_58%_58%] bg-gradient-to-br from-coral/35 via-sun/40 to-mint/40 blur-[1px] transition-transform duration-500 group-hover:rotate-1 group-hover:scale-[1.02]" />
+            <div className="group relative mx-auto -mb-2 h-[22rem] w-full max-w-[24rem] transition-transform duration-500 ease-out hover:-translate-y-2 sm:h-[28rem] lg:h-[34rem]">
+                <div aria-hidden="true" className="absolute inset-x-[8%] bottom-[4%] top-[15%] rotate-3 rounded-[45%_55%_48%_52%/42%_42%_58%_58%] bg-gradient-to-br from-coral/35 via-sun/40 to-mint/40 blur-[1px] transition-transform duration-700 ease-out group-hover:-rotate-1 group-hover:scale-[1.06]" />
                 <div aria-hidden="true" className="absolute right-[2%] top-[20%] h-20 w-20 rounded-full border border-white/70 bg-white/25 backdrop-blur-sm" />
                 <div aria-hidden="true" className="absolute bottom-[9%] left-[3%] h-12 w-12 rotate-12 rounded-2xl bg-accent/20 backdrop-blur-sm" />
                 <Image
                     src={author.avatar}
                     alt={author.name}
-                    width={256}
-                    height={256}
-                    className="relative z-10 h-full w-full object-contain object-bottom drop-shadow-[0_30px_35px_rgba(92,67,178,0.2)]"
+                    width={768}
+                    height={1152}
+                    className="relative z-10 h-full w-full object-contain object-bottom drop-shadow-[0_30px_35px_rgba(92,67,178,0.2)] transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.07]"
                     priority
                 />
             </div>
 
-            {/* Name and Title */}
-            <div className="text-center">
-                <h1 className="sr-only">
-                    {author.name}
-                </h1>
-                {author.title && (
-                    <p className="text-lg text-accent font-medium mb-1">
-                        {author.title}
-                    </p>
-                )}
-                {author.institution && (
-                    <p className="text-neutral-600 mb-2">
-                        {author.institution}
-                    </p>
-                )}
-            </div>
+            {(author.title || author.institution) && (
+                <div className="mb-2 text-center">
+                    {author.title && (
+                        <p className="mb-1 text-lg font-medium text-accent">
+                            {author.title}
+                        </p>
+                    )}
+                    {author.institution && (
+                        <p className="text-neutral-600">
+                            {author.institution}
+                        </p>
+                    )}
+                </div>
+            )}
 
             {/* Contact Links */}
             <div className="relative z-20 -mt-1 flex flex-wrap justify-center gap-2 rounded-full border border-white/70 bg-white/62 px-3 py-1 shadow-[0_12px_34px_rgba(66,48,91,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-white/10">
