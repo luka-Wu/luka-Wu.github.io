@@ -109,23 +109,23 @@ export default function Profile({ author, social, features, researchInterests }:
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
-            className="apple-card mx-auto max-w-sm p-6 lg:sticky lg:top-24 lg:max-w-none"
+            className="relative mx-auto flex max-w-sm flex-col items-center lg:-mt-10 lg:max-w-none lg:self-start"
         >
             {/* Profile Image */}
-            <div className="mx-auto mb-6 h-44 w-44 overflow-hidden rounded-[2rem] border border-black/5 bg-neutral-100 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-white/10 lg:h-48 lg:w-48">
+            <div className="relative mx-auto -mb-2 h-[28rem] w-full max-w-[24rem] transition-transform duration-300 hover:-translate-y-1 lg:h-[34rem]">
                 <Image
                     src={author.avatar}
                     alt={author.name}
                     width={256}
                     height={256}
-                    className="h-full w-full object-cover object-[32%_center]"
+                    className="h-full w-full object-contain object-bottom drop-shadow-[0_30px_35px_rgba(92,67,178,0.16)] mix-blend-multiply dark:mix-blend-normal"
                     priority
                 />
             </div>
 
             {/* Name and Title */}
-            <div className="mb-5 text-center">
-                <h1 className="mb-2 text-3xl font-semibold tracking-tight text-primary">
+            <div className="text-center">
+                <h1 className="sr-only">
                     {author.name}
                 </h1>
                 {author.title && (
@@ -141,7 +141,7 @@ export default function Profile({ author, social, features, researchInterests }:
             </div>
 
             {/* Contact Links */}
-            <div className="relative mb-1 flex flex-wrap justify-center gap-2 px-2">
+            <div className="relative flex flex-wrap justify-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-1 shadow-sm backdrop-blur-md">
                 {socialLinks.map((link) => {
                     const IconComponent = link.icon;
                     if (link.isLocation) {

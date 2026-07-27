@@ -54,9 +54,9 @@ export default function HomePageClient({ dataByLocale, defaultLocale }: HomePage
   }
 
   return (
-    <div className="mx-auto min-h-screen max-w-6xl px-5 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-      <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-14 xl:gap-16">
-        <div>
+    <div className="portfolio-hero mx-auto min-h-[calc(100vh-7rem)] max-w-6xl px-6 py-8 sm:px-10 sm:py-12 lg:px-14 lg:py-16">
+      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] lg:gap-10 xl:gap-16">
+        <div className="order-2 lg:order-2">
           <Profile
             author={data.author}
             social={data.social}
@@ -65,7 +65,7 @@ export default function HomePageClient({ dataByLocale, defaultLocale }: HomePage
           />
         </div>
 
-        <div className="min-w-0 space-y-12">
+        <div className="order-1 min-w-0 space-y-10 lg:order-1">
           {data.pagesToShow.map((page) => (
             <section key={page.id} id={page.id} className="scroll-mt-24 space-y-10">
               {page.type === 'about' && page.sections.map((section: SectionConfig) => {
@@ -76,6 +76,7 @@ export default function HomePageClient({ dataByLocale, defaultLocale }: HomePage
                         key={section.id}
                         content={section.content || ''}
                         title={section.title}
+                        authorName={data.author.name}
                       />
                     );
                   case 'publications':

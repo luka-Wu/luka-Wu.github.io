@@ -158,7 +158,7 @@ export default function Navigation({
   }, [measureIndicator]);
 
   return (
-    <Disclosure as="nav" className="fixed inset-x-0 top-0 z-50">
+    <Disclosure as="nav" className="fixed inset-x-0 top-3 z-50 px-4">
       {({ open }) => (
         <>
           <motion.div
@@ -166,13 +166,13 @@ export default function Navigation({
             animate={{ y: 0 }}
             transition={{ duration: 0.6 }}
             className={cn(
-              'border-b transition-all duration-300 ease-out',
+              'mx-auto max-w-6xl overflow-hidden rounded-2xl border transition-all duration-300 ease-out',
               scrolled
-                ? 'border-neutral-200/70 bg-background/78 shadow-sm backdrop-blur-2xl dark:border-white/10'
-                : 'border-transparent bg-background/60 backdrop-blur-xl'
+                ? 'border-white/70 bg-white/82 shadow-md backdrop-blur-2xl dark:border-white/10 dark:bg-black/75'
+                : 'border-white/65 bg-white/68 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-black/60'
             )}
           >
-            <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+            <div className="mx-auto px-5 sm:px-6 lg:px-8">
               <div className="flex h-14 items-center justify-between lg:h-16">
                 <motion.div
                   whileHover={{ opacity: 0.72 }}
