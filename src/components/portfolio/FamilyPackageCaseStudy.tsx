@@ -109,7 +109,26 @@ export default function FamilyPackageCaseStudy() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[88rem] overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+    <div className="mx-auto w-full max-w-[82rem] overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <div className="surface-soft mb-4 flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-5">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-accent"
+        >
+          <span className="h-2 w-2 rotate-12 rounded-[2px] bg-gradient-to-br from-coral to-accent" />
+          吴洋洋的作品集
+        </Link>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="portfolio-chip">产品案例 · 脱敏展示</span>
+          <Link
+            href="/internships/"
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-neutral-600 transition-colors hover:bg-accent/8 hover:text-accent"
+          >
+            <ArrowLeftIcon className="h-3.5 w-3.5" />
+            返回实习经历
+          </Link>
+        </div>
+      </div>
       <div className="overflow-hidden border border-[#15212a] bg-[#efe9dc] text-[#15212a] shadow-[0_24px_70px_rgba(41,34,25,0.14)]">
         <div className="grid min-w-0 lg:grid-cols-[238px_minmax(0,1fr)]">
           <aside className="min-w-0 border-b border-[#15212a] bg-[#fffdf7] lg:min-h-[72rem] lg:border-b-0 lg:border-r">

@@ -21,7 +21,7 @@ export default function MarkdownContent({
         `${compact
           ? 'text-[16px] leading-7'
           : 'text-[17px] leading-8'
-        } text-neutral-700 dark:text-neutral-700 ${
+        } text-neutral-700 ${
           isTimeline
             ? 'relative before:absolute before:bottom-3 before:left-[7px] before:top-3 before:w-px before:bg-neutral-200 dark:before:bg-white/10'
             : ''
@@ -40,7 +40,7 @@ export default function MarkdownContent({
               className={
                 isTimeline
                   ? 'relative mb-2 mt-10 pl-10 text-sm font-semibold tracking-[0.08em] text-accent first:mt-0 before:absolute before:left-0 before:top-[0.45rem] before:size-[15px] before:rounded-full before:border-[4px] before:border-background before:bg-accent before:shadow-[0_0_0_1px_rgba(108,92,231,0.24)]'
-                  : 'mb-5 mt-12 rounded-2xl border border-accent/10 bg-accent/[0.045] px-5 py-4 text-2xl font-semibold tracking-[-0.025em] text-primary first:mt-0'
+                  : 'surface-soft mb-5 mt-12 px-5 py-4 text-2xl font-semibold tracking-[-0.025em] text-primary first:mt-0'
               }
             >
               {children}
@@ -85,7 +85,7 @@ export default function MarkdownContent({
             );
           },
           blockquote: ({ children }) => (
-            <blockquote className="my-6 rounded-r-2xl border-l-4 border-accent/50 bg-accent/[0.045] px-5 py-3 text-neutral-600 dark:bg-white/5 dark:text-neutral-600">
+            <blockquote className="my-6 rounded-r-2xl border-l-4 border-accent/50 bg-accent/[0.045] px-5 py-3 text-neutral-600">
               {children}
             </blockquote>
           ),

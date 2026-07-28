@@ -21,11 +21,11 @@ export default function About({ content, authorName = '吴洋洋' }: AboutProps)
             transition={{ duration: prefersReducedMotion ? 0 : 0.45, delay: prefersReducedMotion ? 0 : 0.1 }}
             className="relative py-2"
         >
-            <div className="portfolio-kicker mb-7 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-[0.16em] text-neutral-600">
+            <div className="portfolio-kicker mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-[0.16em] text-neutral-600 sm:mb-7">
                 <span className="h-2 w-2 rounded-full bg-mint shadow-[0_0_0_5px_rgba(64,203,181,0.15)]" />
-                HELLO · 你好
+                你好 · 很高兴遇见你
             </div>
-            <h1 className="mb-6 text-[3.15rem] font-semibold leading-[0.94] tracking-[-0.06em] text-primary sm:text-7xl lg:text-[5.4rem]">
+            <h1 className="mb-6 text-[2.8rem] font-semibold leading-[0.94] tracking-[-0.06em] text-primary min-[390px]:text-[3.05rem] sm:text-6xl lg:text-[5.15rem]">
                 Hi,
                 <span className="mt-2 block">
                     我是
@@ -35,11 +35,11 @@ export default function About({ content, authorName = '吴洋洋' }: AboutProps)
                     </span>
                 </span>
             </h1>
-            <div className="mt-8 max-w-2xl rounded-[1.75rem] border border-white/65 bg-white/42 p-5 shadow-[0_16px_42px_rgba(78,57,107,0.08)] backdrop-blur-md dark:border-white/10 dark:bg-white/5 sm:p-6">
+            <div className="surface-card mt-8 max-w-2xl p-5 sm:p-6">
                 <MarkdownContent content={content} compact />
                 <Link
                     href="/education-journey"
-                    className="mt-5 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-white/55 px-3.5 py-2 text-xs font-semibold text-accent shadow-sm transition-all hover:-translate-y-0.5 hover:bg-white/80 dark:border-white/10 dark:bg-white/5"
+                    className="mt-5 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-accent/[0.055] px-3.5 py-2 text-xs font-semibold text-accent transition-all hover:-translate-y-0.5 hover:bg-accent/10"
                 >
                     <MapIcon className="h-4 w-4" />
                     查看求学地图

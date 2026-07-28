@@ -21,9 +21,9 @@ export default function Footer({ lastUpdated, lastUpdatedByLocale, defaultLocale
 
   return (
     <footer className="px-4 pb-5 pt-8">
-      <div className="mx-auto max-w-6xl rounded-[1.5rem] border border-white/60 bg-white/32 px-5 py-6 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.03] sm:px-7">
+      <div className="surface-soft mx-auto max-w-[76rem] px-5 py-5 sm:px-7">
         <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <p className="flex items-center gap-2 text-xs tracking-wide text-neutral-500">
+          <p className="flex items-center gap-2 text-xs font-medium tracking-wide text-neutral-500">
             <span className="h-2 w-2 rounded-full bg-mint" />
             {messages.footer.lastUpdated}: {resolvedLastUpdated}
           </p>

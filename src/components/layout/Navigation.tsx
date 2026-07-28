@@ -166,10 +166,10 @@ export default function Navigation({
             animate={{ y: 0 }}
             transition={{ duration: 0.6 }}
             className={cn(
-              'mx-auto max-w-6xl overflow-hidden rounded-[1.35rem] border transition-all duration-300 ease-out',
+              'mx-auto max-w-[76rem] overflow-hidden rounded-[1.5rem] border border-[var(--surface-border)] transition-all duration-300 ease-out',
               scrolled
-                ? 'border-white/70 bg-white/84 shadow-[0_16px_42px_rgba(62,43,81,0.12)] backdrop-blur-2xl dark:border-white/10 dark:bg-[#17151b]/88'
-                : 'border-white/65 bg-white/70 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#17151b]/72'
+                ? 'bg-[var(--surface-elevated)] shadow-[var(--shadow-elevated)] backdrop-blur-2xl'
+                : 'bg-[var(--surface-card)] shadow-[var(--shadow-card)] backdrop-blur-xl'
             )}
           >
             <div className="mx-auto px-5 sm:px-6 lg:px-8">
@@ -192,7 +192,7 @@ export default function Navigation({
                   <div className="ml-8 flex items-center gap-2">
                     <div
                       ref={navContainerRef}
-                      className="relative flex items-center gap-0.5"
+                      className="relative flex items-center"
                       onMouseLeave={() => setHoveredHref(null)}
                     >
                       {indicatorStyle && (
@@ -230,7 +230,7 @@ export default function Navigation({
                             onClick={() => enableOnePageMode && setActiveHash(`#${item.target}`)}
                             onMouseEnter={() => setHoveredHref(href)}
                             className={cn(
-                              'relative rounded-full px-3 py-1.5 text-[13px] font-semibold transition-colors duration-150 xl:text-sm',
+                              'relative rounded-full px-2.5 py-1.5 text-[12px] font-semibold transition-colors duration-150 xl:px-3 xl:text-[13px]',
                               isActive
                                 ? 'text-primary'
                                 : hoveredHref === href
@@ -277,9 +277,9 @@ export default function Navigation({
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="apple-surface mx-auto mt-2 max-w-6xl overflow-hidden rounded-[1.35rem] lg:hidden"
+                  className="surface-elevated mx-auto mt-2 max-w-[76rem] overflow-hidden lg:hidden"
                 >
-                  <div className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 sm:p-4">
+                  <div className="grid grid-cols-2 gap-2 p-3 sm:p-4">
                     {effectiveItems.map((item, index) => {
                       const isActive = enableOnePageMode
                         ? (item.href === '/' ? pathname === '/' && !activeHash : activeHash === `#${item.target}`)
@@ -297,6 +297,11 @@ export default function Navigation({
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
+                          className={cn(
+                            effectiveItems.length % 2 === 1 &&
+                              index === effectiveItems.length - 1 &&
+                              'col-span-2',
+                          )}
                         >
                           <Disclosure.Button
                             as={Link}
@@ -304,7 +309,7 @@ export default function Navigation({
                             prefetch={true}
                             onClick={() => enableOnePageMode && setActiveHash(item.href === '/' ? '' : `#${item.target}`)}
                             className={cn(
-                              'block rounded-xl px-3 py-3 text-center text-sm font-semibold transition-all duration-200',
+                              'block min-h-11 rounded-2xl px-3 py-3 text-center text-sm font-semibold transition-all duration-200',
                               isActive
                                 ? 'bg-accent/12 text-accent dark:bg-white/10 dark:text-primary'
                                 : 'text-neutral-600 hover:bg-neutral-100 hover:text-primary'

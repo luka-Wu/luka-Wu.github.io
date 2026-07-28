@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { CardPageConfig } from '@/types/page';
+import SectionHeader from '@/components/ui/SectionHeader';
+import SurfaceCard from '@/components/ui/SurfaceCard';
 
 const markdownComponents = {
     p: ({ children }: React.ComponentProps<'p'>) => <p className="mb-3 last:mb-0">{children}</p>,
@@ -41,21 +43,15 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
         >
-            <div className={embedded ? "mb-4" : "mb-8"}>
-                <div className="mb-5 flex items-center gap-3">
-                    <span className="h-2.5 w-2.5 rotate-12 rounded-[3px] bg-coral" />
-                    <span className="h-px w-10 bg-accent/35" />
-                    <span className="text-[10px] font-semibold tracking-[0.22em] text-neutral-500">PORTFOLIO</span>
-                </div>
-                <h1 className={`${embedded ? "text-2xl" : "text-[2.75rem] sm:text-6xl"} mb-4 font-semibold leading-none tracking-[-0.045em] text-primary`}>{config.title}</h1>
-                {config.description && (
-                    <div className={`${embedded ? "text-base" : "text-lg"} text-neutral-600 dark:text-neutral-500 max-w-2xl leading-relaxed`}>
-                        <ReactMarkdown components={markdownComponents}>
-                            {config.description}
-                        </ReactMarkdown>
-                    </div>
-                )}
-            </div>
+            <SectionHeader
+                eyebrow="精选档案"
+                title={config.title}
+                description={config.description}
+                size={embedded ? 'compact' : 'page'}
+                accent="coral"
+                className={embedded ? 'mb-6' : 'mb-10'}
+                headingLevel={embedded ? 'h2' : 'h1'}
+            />
 
             <div className={`grid ${embedded ? "gap-4" : "gap-5 sm:grid-cols-2"}`}>
                 {config.items.map((item, index) => (
@@ -64,35 +60,40 @@ export default function CardPage({ config, embedded = false }: { config: CardPag
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.1 * index }}
-                        className={`group border border-white/70 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-white/5 ${embedded ? "p-4" : "p-6"} rounded-[1.5rem] shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(83,61,119,0.12)]`}
                     >
-                        <div className="flex justify-between items-start mb-2">
-                            <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary`}>{item.title}</h3>
-                            {item.date && (
-                                <span className="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent">
-                                    {item.date}
-                                </span>
-                            )}
-                        </div>
-                        {item.subtitle && (
-                            <p className={`${embedded ? "text-sm" : "text-base"} text-accent font-medium mb-3`}>{item.subtitle}</p>
-                        )}
-                        {item.content && (
-                            <div className={`${embedded ? "text-sm" : "text-base"} text-neutral-600 dark:text-neutral-500 leading-relaxed`}>
-                                <ReactMarkdown components={markdownComponents}>
-                                    {item.content}
-                                </ReactMarkdown>
-                            </div>
-                        )}
-                        {item.tags && (
-                            <div className="flex flex-wrap gap-2 mt-4">
-                                {item.tags.map(tag => (
-                                    <span key={tag} className="rounded-full border border-accent/10 bg-accent/[0.045] px-2.5 py-1 text-xs text-neutral-600">
-                                        {tag}
+                        <SurfaceCard
+                            interactive
+                            padding={embedded ? 'compact' : 'default'}
+                            className="group h-full"
+                        >
+                            <div className="mb-2 flex items-start justify-between gap-3">
+                                <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary`}>{item.title}</h3>
+                                {item.date && (
+                                    <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent">
+                                        {item.date}
                                     </span>
-                                ))}
+                                )}
                             </div>
-                        )}
+                            {item.subtitle && (
+                                <p className={`${embedded ? "text-sm" : "text-base"} mb-3 font-medium text-accent`}>{item.subtitle}</p>
+                            )}
+                            {item.content && (
+                                <div className={`${embedded ? "text-sm" : "text-base"} leading-relaxed text-neutral-600`}>
+                                    <ReactMarkdown components={markdownComponents}>
+                                        {item.content}
+                                    </ReactMarkdown>
+                                </div>
+                            )}
+                            {item.tags && (
+                                <div className="mt-4 flex flex-wrap gap-2">
+                                    {item.tags.map(tag => (
+                                        <span key={tag} className="portfolio-chip">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                        </SurfaceCard>
                     </motion.div>
                 ))}
             </div>

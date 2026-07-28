@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowUpRight, MessageCircle } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 import CommentCard from '@/components/comments/CommentCard';
+import SectionHeader from '@/components/ui/SectionHeader';
 import {
   fetchComments,
   isCommentServiceConfigured,
@@ -61,22 +62,18 @@ export default function CommentTicker() {
   return (
     <section
       aria-labelledby="home-comments-title"
-      className="mt-10 grid gap-5 overflow-hidden rounded-[2rem] border border-white/65 bg-white/42 p-5 shadow-[0_20px_60px_rgba(68,45,89,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.035] sm:mt-12 sm:p-7 lg:grid-cols-[minmax(15rem,0.7fr)_minmax(0,1.3fr)] lg:p-8"
+      className="surface-card mt-10 grid gap-5 overflow-hidden p-5 sm:mt-12 sm:p-7 lg:grid-cols-[minmax(15rem,0.7fr)_minmax(0,1.3fr)] lg:p-8"
     >
       <div className="flex flex-col justify-between">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/15 bg-accent/8 px-3 py-1.5 text-xs font-semibold tracking-wide text-accent">
-            <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
-            大家的留言
-          </span>
-          <h2
-            id="home-comments-title"
-            className="mt-5 text-3xl font-bold tracking-[-0.04em] text-primary sm:text-4xl"
-          >
-            有人在这里
-            <br className="hidden lg:block" />
-            留下了声音
-          </h2>
+          <SectionHeader
+            eyebrow="大家的留言"
+            title="有人在这里留下了声音"
+            size="section"
+            headingLevel="h2"
+            titleId="home-comments-title"
+            titleClassName="lg:max-w-xs"
+          />
           <p className="mt-3 max-w-md text-sm leading-7 text-neutral-600">
             留言会在这里慢慢流动。你也可以写下一句问候、建议或此刻的想法。
           </p>
@@ -92,7 +89,7 @@ export default function CommentTicker() {
       </div>
 
       <div
-        className="comment-ticker-shell relative min-h-72 overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/35 p-3 dark:border-white/10 dark:bg-white/[0.025] sm:min-h-80"
+        className="comment-ticker-shell surface-soft relative min-h-72 overflow-hidden p-3 sm:min-h-80"
         aria-live="polite"
       >
         <div

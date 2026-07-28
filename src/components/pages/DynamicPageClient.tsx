@@ -31,8 +31,8 @@ export default function DynamicPageClient({ dataByLocale, defaultLocale }: Dynam
   }
 
   return (
-    <div className="mx-auto min-h-screen max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-      <div className="page-shell p-6 sm:p-10 lg:p-14">
+    <div className="site-page">
+      <div className="site-shell p-6 sm:p-10 lg:p-14">
         <div aria-hidden="true" className="portfolio-grid pointer-events-none absolute inset-0 opacity-35" />
         <div className="relative mx-auto max-w-4xl">
           {pageData.type === 'publication' && (

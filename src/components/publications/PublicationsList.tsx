@@ -16,6 +16,7 @@ import { PublicationPageConfig } from '@/types/page';
 import { cn } from '@/lib/utils';
 import { useMessages } from '@/lib/i18n/useMessages';
 import FormattedBibTeXText from './FormattedBibTeXText';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 interface PublicationsListProps {
     config: PublicationPageConfig;
@@ -65,19 +66,14 @@ export default function PublicationsList({ config, publications, embedded = fals
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
         >
-            <div className="mb-8">
-                <div className="mb-5 flex items-center gap-3">
-                    <span className="h-2.5 w-2.5 rotate-12 rounded-[3px] bg-coral" />
-                    <span className="h-px w-10 bg-accent/35" />
-                    <span className="text-[10px] font-semibold tracking-[0.22em] text-neutral-500">PUBLICATIONS</span>
-                </div>
-                <h1 className={`${embedded ? "text-2xl" : "text-[2.75rem] sm:text-6xl"} mb-4 font-semibold leading-none tracking-[-0.045em] text-primary`}>{config.title}</h1>
-                {config.description && (
-                    <p className={`${embedded ? "text-base" : "text-lg"} text-neutral-600 dark:text-neutral-500 max-w-2xl`}>
-                        {config.description}
-                    </p>
-                )}
-            </div>
+            <SectionHeader
+                eyebrow="研究成果"
+                title={config.title}
+                description={config.description}
+                size={embedded ? 'compact' : 'page'}
+                headingLevel={embedded ? 'h2' : 'h1'}
+                className="mb-8"
+            />
 
             {/* Search and Filter Controls */}
             <div className="mb-8 space-y-4">
@@ -91,7 +87,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                             placeholder={messages.publications.searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full rounded-2xl border border-white/70 bg-white/60 py-3 pl-10 pr-4 backdrop-blur-md transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-accent dark:border-white/10 dark:bg-white/5"
+                            className="surface-soft w-full py-3 pl-10 pr-4 outline-none transition-all duration-200 focus:border-accent/40 focus:ring-4 focus:ring-accent/10"
                         />
                     </div>
                     <button
@@ -102,7 +98,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                             "flex items-center justify-center rounded-2xl border px-4 py-3 font-medium transition-all duration-200",
                             showFilters
                                 ? "bg-accent text-white border-accent"
-                                : "border-white/70 bg-white/60 text-neutral-600 backdrop-blur-md hover:border-accent hover:text-accent dark:border-white/10 dark:bg-white/5"
+                                : "border-[var(--surface-border)] bg-[var(--surface-soft)] text-neutral-600 backdrop-blur-md hover:border-accent/40 hover:text-accent"
                         )}
                     >
                         <FunnelIcon className="h-5 w-5 mr-2" />
@@ -118,7 +114,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                             exit={{ opacity: 0, height: 0 }}
                             className="overflow-hidden"
                         >
-                            <div id="publication-filters" className="p-4 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-800 flex flex-wrap gap-6">
+                            <div id="publication-filters" className="surface-soft flex flex-wrap gap-6 p-4">
                                 {/* Year Filter */}
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 flex items-center">
@@ -132,7 +128,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                 "px-3 py-1 text-xs rounded-full transition-colors",
                                                 selectedYear === 'all'
                                                     ? "bg-accent text-white"
-                                                    : "bg-white dark:bg-neutral-800 text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                    : "bg-[var(--surface-elevated)] text-neutral-600 hover:text-accent"
                                             )}
                                         >
                                             {messages.common.all}
@@ -146,7 +142,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                     "px-3 py-1 text-xs rounded-full transition-colors",
                                                     selectedYear === year
                                                         ? "bg-accent text-white"
-                                                        : "bg-white dark:bg-neutral-800 text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                        : "bg-[var(--surface-elevated)] text-neutral-600 hover:text-accent"
                                                 )}
                                             >
                                                 {year}
@@ -168,7 +164,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                 "px-3 py-1 text-xs rounded-full transition-colors",
                                                 selectedType === 'all'
                                                     ? "bg-accent text-white"
-                                                    : "bg-white dark:bg-neutral-800 text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                    : "bg-[var(--surface-elevated)] text-neutral-600 hover:text-accent"
                                             )}
                                         >
                                             {messages.common.all}
@@ -182,7 +178,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                     "px-3 py-1 text-xs rounded-full capitalize transition-colors",
                                                     selectedType === type
                                                         ? "bg-accent text-white"
-                                                        : "bg-white dark:bg-neutral-800 text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                        : "bg-[var(--surface-elevated)] text-neutral-600 hover:text-accent"
                                                 )}
                                             >
                                                 {type.replace('-', ' ')}
@@ -209,7 +205,7 @@ export default function PublicationsList({ config, publications, embedded = fals
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 * index }}
-                            className="rounded-[1.5rem] border border-white/70 bg-white/58 p-6 shadow-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(83,61,119,0.12)] dark:border-white/10 dark:bg-white/5"
+                            className="surface-card surface-interactive p-6"
                         >
                             <div className="flex flex-col md:flex-row gap-6">
                                 {pub.preview && (
@@ -312,8 +308,8 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                 exit={{ opacity: 0, height: 0 }}
                                                 className="overflow-hidden mt-4"
                                             >
-                                                <div className="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700">
-                                                    <p className="text-sm text-neutral-600 dark:text-neutral-500 leading-relaxed">
+                                                <div className="surface-soft p-4">
+                                                    <p className="text-sm leading-relaxed text-neutral-600">
                                                         {pub.abstract}
                                                     </p>
                                                 </div>
@@ -327,8 +323,8 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                 exit={{ opacity: 0, height: 0 }}
                                                 className="overflow-hidden mt-4"
                                             >
-                                                <div className="relative bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700">
-                                                    <pre className="text-xs text-neutral-600 dark:text-neutral-500 overflow-x-auto whitespace-pre-wrap font-mono">
+                                                <div className="surface-soft relative p-4">
+                                                    <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-xs text-neutral-600">
                                                         {pub.bibtex}
                                                     </pre>
                                                     <button

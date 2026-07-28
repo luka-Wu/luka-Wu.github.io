@@ -46,7 +46,7 @@ export default function CommentCard({ comment, compact = false }: ICommentCardPr
   return (
     <>
       <article
-        className={`group rounded-[1.35rem] border border-white/70 bg-white/72 shadow-[0_14px_42px_rgba(64,43,83,0.08)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/[0.055] ${
+        className={`surface-card group transition-transform duration-300 hover:-translate-y-0.5 ${
           compact ? 'p-4' : 'p-5 sm:p-6'
         }`}
       >

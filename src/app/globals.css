@@ -41,6 +41,15 @@
   --glass-bg: rgba(255, 253, 250, 0.78);
   --glass-border: rgba(63, 50, 72, 0.1);
   --glass-shadow: rgba(69, 50, 107, 0.1);
+  --surface-soft: rgba(255, 253, 250, 0.46);
+  --surface-card: rgba(255, 253, 250, 0.72);
+  --surface-elevated: rgba(255, 253, 250, 0.9);
+  --surface-border: rgba(81, 65, 96, 0.11);
+  --radius-card: 1.5rem;
+  --radius-panel: 1.875rem;
+  --radius-shell: 2.25rem;
+  --shadow-card: 0 14px 38px rgba(70, 48, 91, 0.08);
+  --shadow-elevated: 0 24px 68px rgba(70, 48, 91, 0.12);
 }
 
 @theme inline {
@@ -158,6 +167,12 @@ html[data-locale^="zh"] {
   --glass-bg: rgba(29, 27, 34, 0.78);
   --glass-border: rgba(255, 255, 255, 0.11);
   --glass-shadow: rgba(0, 0, 0, 0.5);
+  --surface-soft: rgba(255, 255, 255, 0.035);
+  --surface-card: rgba(255, 255, 255, 0.06);
+  --surface-elevated: rgba(31, 29, 36, 0.92);
+  --surface-border: rgba(255, 255, 255, 0.1);
+  --shadow-card: 0 14px 42px rgba(0, 0, 0, 0.2);
+  --shadow-elevated: 0 26px 72px rgba(0, 0, 0, 0.34);
   
   /* Neutral colors for dark mode - properly inverted */
   --neutral-50: #111113;
@@ -253,10 +268,82 @@ button {
 }
 
 .apple-card {
-  background: color-mix(in srgb, var(--glass-bg) 90%, var(--background));
-  border: 1px solid var(--glass-border);
-  border-radius: 1.75rem;
-  box-shadow: 0 18px 50px color-mix(in srgb, var(--glass-shadow) 68%, transparent);
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+.surface-soft,
+.surface-card,
+.surface-elevated {
+  border: 1px solid var(--surface-border);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+.surface-soft {
+  border-radius: var(--radius-card);
+  background: var(--surface-soft);
+}
+
+.surface-card {
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+}
+
+.surface-elevated {
+  border-radius: var(--radius-panel);
+  background: var(--surface-elevated);
+  box-shadow: var(--shadow-elevated);
+}
+
+.surface-interactive {
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.surface-interactive:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 25%, var(--surface-border));
+  box-shadow: 0 20px 52px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.site-page {
+  width: 100%;
+  max-width: 76rem;
+  min-height: calc(100vh - 7rem);
+  margin-inline: auto;
+  padding: 2rem 1rem;
+}
+
+.site-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-shell);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 25rem),
+    color-mix(in srgb, var(--surface-card) 92%, var(--background));
+  box-shadow: var(--shadow-elevated);
+}
+
+@media (min-width: 640px) {
+  .site-page {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-page {
+    padding: 4rem 2rem;
+  }
 }
 
 .portfolio-hero {
@@ -362,11 +449,11 @@ button {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--glass-border);
-  border-radius: 2rem;
+  border-radius: var(--radius-shell);
   background:
     radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 25rem),
     color-mix(in srgb, var(--glass-bg) 88%, var(--background));
-  box-shadow: 0 24px 70px color-mix(in srgb, var(--glass-shadow) 64%, transparent);
+  box-shadow: var(--shadow-elevated);
 }
 
 .comment-ticker-track {
@@ -440,13 +527,7 @@ button {
   background: var(--neutral-500);
 }
 
-/* Card background utility */
 .card-bg {
-  background-color: #ffffff;
-}
-
-.dark .card-bg {
-  background-color: #1e293b;
-  /* Soften card borders in dark mode only */
-  border-color: rgba(148, 163, 184, 0.24);
+  background: var(--surface-card);
+  border-color: var(--surface-border);
 }

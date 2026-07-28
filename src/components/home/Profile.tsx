@@ -110,10 +110,10 @@ export default function Profile({ author, social, features, researchInterests }:
             initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.45 }}
-            className="relative mx-auto flex max-w-sm flex-col items-center lg:-mt-2 lg:max-w-none lg:self-start"
+            className="relative mx-auto flex w-full max-w-sm flex-col items-center lg:-mt-2 lg:max-w-none lg:self-start"
         >
             {/* Profile Image */}
-            <div className="group relative mx-auto -mb-2 h-[22rem] w-full max-w-[24rem] transition-transform duration-500 ease-out hover:-translate-y-2 sm:h-[28rem] lg:h-[34rem]">
+            <div className="group relative mx-auto -mb-2 h-[17rem] w-full max-w-[24rem] transition-transform duration-500 ease-out hover:-translate-y-2 min-[390px]:h-[19rem] sm:h-[26rem] lg:h-[33rem]">
                 <div aria-hidden="true" className="absolute inset-x-[8%] bottom-[4%] top-[15%] rotate-3 rounded-[45%_55%_48%_52%/42%_42%_58%_58%] bg-gradient-to-br from-coral/35 via-sun/40 to-mint/40 blur-[1px] transition-transform duration-700 ease-out group-hover:-rotate-1 group-hover:scale-[1.06]" />
                 <div aria-hidden="true" className="absolute right-[2%] top-[20%] h-20 w-20 rounded-full border border-white/70 bg-white/25 backdrop-blur-sm" />
                 <div aria-hidden="true" className="absolute bottom-[9%] left-[3%] h-12 w-12 rotate-12 rounded-2xl bg-accent/20 backdrop-blur-sm" />
@@ -143,7 +143,7 @@ export default function Profile({ author, social, features, researchInterests }:
             )}
 
             {/* Contact Links */}
-            <div className="relative z-20 -mt-1 flex flex-wrap justify-center gap-2 rounded-full border border-white/70 bg-white/62 px-3 py-1 shadow-[0_12px_34px_rgba(66,48,91,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-white/10">
+            <div className="surface-elevated relative z-20 -mt-1 flex flex-wrap justify-center gap-2 rounded-full px-3 py-1">
                 {socialLinks.map((link) => {
                     const IconComponent = link.icon;
                     if (link.isLocation) {
@@ -311,9 +311,9 @@ export default function Profile({ author, social, features, researchInterests }:
 
             {/* Research Interests */}
             {researchInterests && researchInterests.length > 0 && (
-                <div className="bg-neutral-100 dark:bg-neutral-800 rounded-lg p-4 mb-6 hover:shadow-lg transition-all duration-200 hover:scale-[1.02]">
-                    <h3 className="font-semibold text-primary mb-3">{messages.profile.researchInterests}</h3>
-                    <div className="space-y-2 text-sm text-neutral-700 dark:text-neutral-500">
+                <div className="surface-card mb-6 mt-5 w-full max-w-sm p-4 transition-all duration-200 hover:-translate-y-0.5">
+                    <h3 className="mb-3 font-semibold text-primary">{messages.profile.researchInterests}</h3>
+                    <div className="space-y-2 text-sm text-neutral-600">
                         {researchInterests.map((interest, index) => (
                             <div key={index}>{interest}</div>
                         ))}

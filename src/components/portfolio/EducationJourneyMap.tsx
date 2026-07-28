@@ -8,6 +8,7 @@ import {
   ArrowTopRightOnSquareIcon,
   MapPinIcon,
 } from '@heroicons/react/24/outline';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 const EDUCATION_STOPS = [
   {
@@ -61,8 +62,8 @@ export default function EducationJourneyMap() {
   const activeStop = EDUCATION_STOPS.find((stop) => stop.id === activeId) ?? EDUCATION_STOPS[2];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-      <div className="page-shell overflow-hidden p-5 sm:p-8 lg:p-12">
+    <div className="site-page">
+      <div className="site-shell p-5 sm:p-8 lg:p-12">
         <div aria-hidden="true" className="portfolio-grid pointer-events-none absolute inset-0 opacity-30" />
 
         <div className="relative">
@@ -74,21 +75,15 @@ export default function EducationJourneyMap() {
             返回个人介绍
           </Link>
 
-          <div className="max-w-3xl">
-            <div className="portfolio-kicker mb-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[10px] font-semibold tracking-[0.2em] text-neutral-600">
-              EDUCATION JOURNEY · 求学地图
-            </div>
-            <h1 className="text-[2.8rem] font-semibold leading-[0.95] tracking-[-0.055em] text-primary sm:text-6xl lg:text-7xl">
-              从长沙出发，
-              <span className="block text-accent">一路向北。</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-neutral-600 sm:text-lg">
-              在长沙完成中学阶段学习，前往武汉攻读本科，下一站是北京。
-            </p>
-          </div>
+          <SectionHeader
+            eyebrow="求学地图"
+            title="从长沙出发，一路向北。"
+            description="在长沙完成中学阶段学习，前往武汉攻读本科，下一站是北京。"
+            accent="mint"
+          />
 
           <section className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(17rem,0.65fr)]">
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/52 p-3 shadow-[0_24px_65px_rgba(73,53,105,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-white/5 sm:p-5">
+            <div className="surface-card relative overflow-hidden p-3 sm:p-5">
               <div className="absolute left-5 top-5 z-10 rounded-full border border-white/70 bg-white/65 px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] text-neutral-500 backdrop-blur-md dark:border-white/10 dark:bg-white/10">
                 中国 · 位置示意
               </div>
@@ -142,7 +137,7 @@ export default function EducationJourneyMap() {
                     <g
                       key={stop.id}
                       onClick={() => setActiveId(stop.id)}
-                      className="cursor-pointer"
+                      className="cursor-pointer focus:outline-none"
                       role="button"
                       tabIndex={0}
                       aria-label={`${stop.stage}：${stop.school}`}
@@ -152,6 +147,12 @@ export default function EducationJourneyMap() {
                         }
                       }}
                     >
+                      <circle
+                        cx={stop.point.x}
+                        cy={stop.point.y}
+                        r="390"
+                        fill="transparent"
+                      />
                       <motion.circle
                         cx={stop.point.x}
                         cy={stop.point.y}
@@ -194,7 +195,7 @@ export default function EducationJourneyMap() {
               </p>
             </div>
 
-            <div className="rounded-[1.75rem] border border-white/70 bg-white/55 p-6 shadow-[0_20px_55px_rgba(73,53,105,0.1)] backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
+            <div className="surface-card p-6">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStop.id}
@@ -202,7 +203,7 @@ export default function EducationJourneyMap() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.22 }}
-                  className="flex h-full min-h-[20rem] flex-col"
+                  className="flex h-full min-h-[16rem] flex-col lg:min-h-[20rem]"
                 >
                   <span className="text-5xl font-semibold text-accent/25">{activeStop.order}</span>
                   <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-accent">
@@ -230,13 +231,13 @@ export default function EducationJourneyMap() {
             </div>
           </section>
 
-          <section className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <section className="mt-8 flex snap-x gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {EDUCATION_STOPS.map((stop) => (
               <button
                 key={stop.id}
                 type="button"
                 onClick={() => setActiveId(stop.id)}
-                className={`rounded-[1.35rem] border p-4 text-left transition-all duration-300 ${
+                className={`min-w-[16rem] snap-start rounded-[1.35rem] border p-4 text-left transition-all duration-300 sm:min-w-0 ${
                   stop.id === activeId
                     ? 'border-accent/30 bg-accent/10 shadow-[0_12px_30px_rgba(108,92,231,0.12)]'
                     : 'border-white/65 bg-white/38 hover:-translate-y-1 hover:bg-white/65 dark:border-white/10 dark:bg-white/[0.04]'

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useMessages } from '@/lib/i18n/useMessages';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 export interface NewsItem {
     date: string;
@@ -22,10 +23,17 @@ export default function News({ items, title }: NewsProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.2 }}
-            className="apple-card relative overflow-hidden p-6 sm:p-8"
+            className="surface-card relative overflow-hidden p-6 sm:p-8"
         >
             <span aria-hidden="true" className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-sun/18" />
-            <h2 className="relative mb-6 text-2xl font-semibold tracking-tight text-primary">{resolvedTitle}</h2>
+            <SectionHeader
+                eyebrow="最近动态"
+                title={resolvedTitle}
+                size="compact"
+                accent="sun"
+                headingLevel="h2"
+                className="relative mb-6"
+            />
             <div className="relative">
                 <div className="absolute bottom-3 left-[5.1rem] top-3 w-px bg-gradient-to-b from-accent/70 via-accent/30 to-transparent sm:left-[6.1rem]" />
                 {items.map((item, index) => (

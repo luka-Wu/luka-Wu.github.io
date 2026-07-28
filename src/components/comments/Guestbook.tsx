@@ -11,6 +11,7 @@ import {
   X,
 } from 'lucide-react';
 import CommentCard from '@/components/comments/CommentCard';
+import SectionHeader from '@/components/ui/SectionHeader';
 import {
   MEDIA_ACCEPTED_TYPES,
   MEDIA_MAX_FILE_SIZE,
@@ -201,15 +202,15 @@ export default function Guestbook() {
 
   return (
     <div className="grid gap-7 lg:grid-cols-[minmax(18rem,0.72fr)_minmax(0,1.28fr)] lg:items-start">
-      <section className="apple-surface rounded-[1.75rem] p-5 sm:p-7 lg:sticky lg:top-28">
-        <span className="inline-flex items-center gap-2 rounded-full border border-accent/15 bg-accent/8 px-3 py-1.5 text-xs font-semibold tracking-wide text-accent">
-          <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
-          留下一句话
-        </span>
-        <h2 className="mt-5 text-2xl font-bold tracking-tight text-primary">写下你的名字和留言</h2>
-        <p className="mt-2 text-sm leading-7 text-neutral-600">
-          无需登录。留言发布后会立即出现在这里，也可能出现在首页的滚动评论中。
-        </p>
+      <section className="surface-card p-5 sm:p-7 lg:sticky lg:top-28">
+        <SectionHeader
+          eyebrow="留言入口"
+          title="写下你的名字和留言"
+          description="无需登录。留言发布后会立即出现在这里，也可能出现在首页的滚动评论中。"
+          size="compact"
+          headingLevel="h2"
+          accent="coral"
+        />
 
         {!configured ? (
           <div
@@ -363,12 +364,13 @@ export default function Guestbook() {
 
       <section aria-labelledby="comment-list-title" className="min-w-0">
         <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Guestbook</p>
-            <h2 id="comment-list-title" className="mt-1 text-2xl font-bold tracking-tight text-primary">
-              最新留言
-            </h2>
-          </div>
+          <SectionHeader
+            eyebrow="留言簿"
+            title="最新留言"
+            size="compact"
+            headingLevel="h2"
+            titleId="comment-list-title"
+          />
           {configured && (
             <button
               type="button"
@@ -390,7 +392,7 @@ export default function Guestbook() {
             {Array.from({ length: 3 }).map((_, index) => (
               <div
                 key={index}
-                className="h-32 animate-pulse rounded-[1.35rem] border border-white/60 bg-white/45 dark:border-white/10 dark:bg-white/[0.04]"
+                className="surface-soft h-32 animate-pulse"
               />
             ))}
           </div>
@@ -418,7 +420,7 @@ export default function Guestbook() {
         )}
 
         {!loading && !loadError && comments.length === 0 && (
-          <div className="mt-5 rounded-[1.35rem] border border-dashed border-neutral-300 bg-white/35 p-8 text-center dark:border-white/15 dark:bg-white/[0.025]">
+          <div className="surface-soft mt-5 border-dashed p-8 text-center">
             <MessageCircle className="mx-auto h-7 w-7 text-accent" aria-hidden="true" />
             <p className="mt-3 font-semibold text-primary">还没有留言</p>
             <p className="mt-1 text-sm text-neutral-500">成为第一个留下足迹的人吧。</p>
