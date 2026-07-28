@@ -369,6 +369,35 @@ button {
   box-shadow: 0 24px 70px color-mix(in srgb, var(--glass-shadow) 64%, transparent);
 }
 
+.comment-ticker-track {
+  display: flex;
+  flex-direction: column;
+  animation: comment-ticker-scroll 34s linear infinite;
+  will-change: transform;
+}
+
+.comment-ticker-group {
+  display: grid;
+  flex: none;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.comment-ticker-shell:hover .comment-ticker-track,
+.comment-ticker-shell:focus-within .comment-ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes comment-ticker-scroll {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

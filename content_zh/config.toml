@@ -46,3 +46,9 @@ title = "CV"
 type = "page"
 target = "cv"
 href = "/cv"
+
+[[navigation]]
+title = "留言"
+type = "link"
+target = "guestbook"
+href = "/guestbook"
