@@ -11,9 +11,9 @@
 
 脚本会创建评论表、照片墙表、`guestbook-media` Storage bucket，以及对应的权限策略：
 
-- 访客可以读取公开内容、提交留言，并向 `comments/` 上传一张图片。
-- 访客不能修改、删除留言或管理照片墙。
-- 只有邮箱为 `wuyy.77@qq.com` 的 Supabase Auth 用户可以管理 `wall/` 图片和照片墙记录。
+- 访客可以提交留言，也可以向 `wall/` 投稿一张待审核照片。
+- 未审核照片不会出现在公开查询结果中；访客不能修改、通过或删除照片。
+- 只有邮箱为 `wuyy.77@qq.com` 的 Supabase Auth 用户可以审核、发布和删除照片墙记录。
 
 ## 2. 获取公开配置
 
@@ -46,7 +46,7 @@ NEXT_PUBLIC_SITE_ADMIN_EMAIL=wuyy.77@qq.com
 - `Redirect URLs` 加入 `https://luka-wu.github.io/guestbook/`
 - 本地调试时再加入 `http://localhost:3000/guestbook/`
 
-打开 `Authentication → Providers → Email`，确认 Email provider 和 Magic Link 可用。上传入口会将登录链接发送到 `wuyy.77@qq.com`；不要在前端保存密码或 `service_role key`。
+打开 `Authentication → Providers → Email`，确认 Email provider 和 Magic Link 可用。“审核登录”入口会将登录链接发送到 `wuyy.77@qq.com`；不要在前端保存密码或 `service_role key`。
 
 ## 4. 配置 GitHub Pages
 
@@ -61,11 +61,13 @@ NEXT_PUBLIC_SITE_ADMIN_EMAIL=wuyy.77@qq.com
 
 ## 5. 使用照片墙
 
-进入 `/guestbook/` 并点击“上传照片”。未登录时先发送 Magic Link，在同一浏览器中打开邮件里的链接即可恢复管理会话。本人登录后可以：
+进入 `/guestbook/` 并点击“上传照片”，任何访客都可以填写标题、分类、说明和拍摄日期后投稿。投稿不会立即公开，审核通过后才会显示在照片墙。
 
-- 上传 JPEG、PNG 或 WebP 照片。
-- 填写标题、兴趣分类、说明和拍摄日期。
-- 删除自己发布的照片。
+站点本人点击“审核登录”，通过 Magic Link 登录后可以查看“待审核”分类，并执行：
+
+- 通过投稿并公开展示。
+- 拒绝投稿并删除对应图片。
+- 删除已经公开的照片。
 
 图片在浏览器端缩放并重新编码为 WebP，因此 EXIF 和定位信息不会写入上传文件。单张原图和处理后的文件均不能超过 3MB。
 

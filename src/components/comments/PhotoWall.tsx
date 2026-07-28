@@ -4,21 +4,26 @@ import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import {
   Camera,
+  Check,
   ImagePlus,
   LoaderCircle,
   LogOut,
   RefreshCw,
+  ShieldCheck,
   Trash2,
   Upload,
   X,
 } from 'lucide-react';
 import {
+  approveInterestPhoto,
   createInterestPhoto,
   deleteInterestPhoto,
+  discardOrphanWallImage,
   fetchInterestPhotos,
   PHOTO_CAPTION_MAX_LENGTH,
   PHOTO_CATEGORY_MAX_LENGTH,
   PHOTO_TITLE_MAX_LENGTH,
+  submitInterestPhoto,
   type IInterestPhoto,
 } from '@/lib/photos';
 import {
@@ -36,6 +41,7 @@ import {
 } from '@/lib/supabase';
 
 const ALL_CATEGORIES = '全部';
+const PENDING_CATEGORY = '待审核';
 
 interface IUploadForm {
   title: string;
@@ -72,13 +78,16 @@ export default function PhotoWall() {
   const [activeCategory, setActiveCategory] = useState(ALL_CATEGORIES);
   const [selectedPhoto, setSelectedPhoto] = useState<IInterestPhoto | null>(null);
   const [uploadOpen, setUploadOpen] = useState(false);
+  const [loginMode, setLoginMode] = useState(false);
   const [uploadForm, setUploadForm] = useState<IUploadForm>(EMPTY_UPLOAD_FORM);
   const [previewUrl, setPreviewUrl] = useState('');
   const [loading, setLoading] = useState(configured);
   const [uploading, setUploading] = useState(false);
+  const [approvingId, setApprovingId] = useState('');
   const [deletingId, setDeletingId] = useState('');
   const [loadError, setLoadError] = useState('');
   const [uploadError, setUploadError] = useState('');
+  const [submissionNotice, setSubmissionNotice] = useState('');
   const [authEmail, setAuthEmail] = useState('');
   const [authLoading, setAuthLoading] = useState(configured);
   const [magicLinkSending, setMagicLinkSending] = useState(false);
@@ -88,14 +97,17 @@ export default function PhotoWall() {
   const categories = useMemo(
     () => [
       ALL_CATEGORIES,
+      ...(isOwner && photos.some((photo) => !photo.approved) ? [PENDING_CATEGORY] : []),
       ...Array.from(new Set(photos.map((photo) => photo.category))).sort((a, b) =>
         a.localeCompare(b, 'zh-CN'),
       ),
     ],
-    [photos],
+    [isOwner, photos],
   );
   const visiblePhotos =
-    activeCategory === ALL_CATEGORIES
+    activeCategory === PENDING_CATEGORY
+      ? photos.filter((photo) => !photo.approved)
+      : activeCategory === ALL_CATEGORIES
       ? photos
       : photos.filter((photo) => photo.category === activeCategory);
 
@@ -116,7 +128,7 @@ export default function PhotoWall() {
 
   useEffect(() => {
     void loadPhotos();
-  }, [loadPhotos]);
+  }, [isOwner, loadPhotos]);
 
   useEffect(() => {
     if (!supabase) return;
@@ -200,10 +212,6 @@ export default function PhotoWall() {
     const title = uploadForm.title.trim();
     const category = uploadForm.category.trim();
 
-    if (!isOwner) {
-      setUploadError('请先完成本人登录。');
-      return;
-    }
     if (!title || title.length > PHOTO_TITLE_MAX_LENGTH) {
       setUploadError(`标题需要填写 1–${PHOTO_TITLE_MAX_LENGTH} 个字符。`);
       return;
@@ -223,28 +231,33 @@ export default function PhotoWall() {
 
     setUploading(true);
     setUploadError('');
+    setSubmissionNotice('');
     let storagePath = '';
 
     try {
       storagePath = await uploadGuestbookImage(uploadForm.file, 'wall');
-      const createdPhoto = await createInterestPhoto({
+      const photoInput = {
         title,
         category,
         caption: uploadForm.caption,
         shotDate: uploadForm.shotDate || null,
         storagePath,
-      });
-      setPhotos((currentPhotos) => [createdPhoto, ...currentPhotos]);
+      };
+      const createdPhoto = isOwner
+        ? await createInterestPhoto(photoInput)
+        : await submitInterestPhoto(photoInput);
+
+      if (isOwner) {
+        setPhotos((currentPhotos) => [createdPhoto, ...currentPhotos]);
+      } else {
+        setSubmissionNotice('照片已提交，审核通过后会出现在照片墙。');
+      }
       setActiveCategory(ALL_CATEGORIES);
       setUploadForm(EMPTY_UPLOAD_FORM);
       setUploadOpen(false);
     } catch (error) {
       if (storagePath) {
-        try {
-          await removeGuestbookImage(storagePath);
-        } catch {
-          // 数据保存失败时尽力清理已经上传的文件。
-        }
+        void discardOrphanWallImage(storagePath);
       }
       setUploadError(error instanceof Error ? error.message : '照片上传失败。');
     } finally {
@@ -252,8 +265,31 @@ export default function PhotoWall() {
     }
   };
 
+  const handleApprove = async (photo: IInterestPhoto) => {
+    if (!isOwner) return;
+
+    setApprovingId(photo.id);
+    setLoadError('');
+
+    try {
+      await approveInterestPhoto(photo.id);
+      setPhotos((currentPhotos) =>
+        currentPhotos.map((currentPhoto) =>
+          currentPhoto.id === photo.id
+            ? { ...currentPhoto, approved: true }
+            : currentPhoto,
+        ),
+      );
+    } catch (error) {
+      setLoadError(error instanceof Error ? error.message : '照片审核失败。');
+    } finally {
+      setApprovingId('');
+    }
+  };
+
   const handleDelete = async (photo: IInterestPhoto) => {
-    if (!isOwner || !window.confirm(`确认删除“${photo.title}”吗？`)) return;
+    const actionLabel = photo.approved ? '删除' : '拒绝并删除';
+    if (!isOwner || !window.confirm(`确认${actionLabel}“${photo.title}”吗？`)) return;
 
     setDeletingId(photo.id);
 
@@ -278,13 +314,13 @@ export default function PhotoWall() {
   return (
     <section
       aria-labelledby="photo-wall-title"
-      className="mb-8 overflow-hidden rounded-[2rem] border border-white/65 bg-white/42 p-5 shadow-[0_20px_64px_rgba(69,45,91,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.035] sm:p-7 lg:p-8"
+      className="surface-card mb-8 overflow-hidden p-5 sm:p-7 lg:p-8"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-coral/20 bg-coral/8 px-3 py-1.5 text-xs font-semibold tracking-wide text-coral">
             <Camera className="h-3.5 w-3.5" aria-hidden="true" />
-            Interest Gallery
+            兴趣相册
           </span>
           <h2
             id="photo-wall-title"
@@ -293,12 +329,12 @@ export default function PhotoWall() {
             兴趣切片
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-7 text-neutral-600">
-            记录旅行、阅读、运动和生活里那些值得停一下的瞬间。
+            每个人都可以投稿。照片会先进入审核，通过后再公开展示。
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          {isOwner && (
+          {isOwner ? (
             <button
               type="button"
               onClick={() => void supabase?.auth.signOut()}
@@ -307,10 +343,25 @@ export default function PhotoWall() {
               <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
               退出管理
             </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setLoginMode(true);
+                setUploadError('');
+                setMagicLinkSent(false);
+                setUploadOpen(true);
+              }}
+              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-neutral-200 bg-white/55 px-4 py-2 text-xs font-semibold text-neutral-600 transition hover:text-accent dark:border-white/10 dark:bg-white/[0.04]"
+            >
+              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+              审核登录
+            </button>
           )}
           <button
             type="button"
             onClick={() => {
+              setLoginMode(false);
               setUploadError('');
               setMagicLinkSent(false);
               setUploadOpen(true);
@@ -322,6 +373,15 @@ export default function PhotoWall() {
           </button>
         </div>
       </div>
+
+      {submissionNotice && (
+        <p
+          role="status"
+          className="mt-5 rounded-2xl border border-success/25 bg-success/8 px-4 py-3 text-sm text-neutral-700"
+        >
+          {submissionNotice}
+        </p>
+      )}
 
       {categories.length > 1 && (
         <div
@@ -349,11 +409,11 @@ export default function PhotoWall() {
       )}
 
       {loading && (
-        <div className="mt-6 columns-1 gap-4 sm:columns-2 lg:columns-3" aria-label="正在加载照片">
-          {[240, 320, 270, 220, 300, 250].map((height, index) => (
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4" aria-label="正在加载照片">
+          {[180, 230, 195].map((height, index) => (
             <div
               key={index}
-              className="mb-4 animate-pulse break-inside-avoid rounded-[1.35rem] bg-white/55 dark:bg-white/[0.055]"
+              className="animate-pulse rounded-[1.35rem] bg-white/55 dark:bg-white/[0.055]"
               style={{ height }}
             />
           ))}
@@ -375,7 +435,7 @@ export default function PhotoWall() {
       )}
 
       {!loading && !loadError && photos.length === 0 && (
-        <div className="mt-6 rounded-[1.5rem] border border-dashed border-neutral-300 bg-white/30 px-6 py-12 text-center dark:border-white/15 dark:bg-white/[0.025]">
+        <div className="surface-soft mt-6 border-dashed px-6 py-12 text-center">
           <Camera className="mx-auto h-8 w-8 text-coral" aria-hidden="true" />
           <p className="mt-3 font-semibold text-primary">照片墙还在等待第一张照片</p>
           <p className="mt-1 text-sm text-neutral-500">从一个喜欢的瞬间开始记录吧。</p>
@@ -390,8 +450,13 @@ export default function PhotoWall() {
             return (
               <article
                 key={photo.id}
-                className="group relative mb-4 break-inside-avoid overflow-hidden rounded-[1.35rem] border border-white/70 bg-white/70 shadow-[0_14px_38px_rgba(64,42,82,0.09)] dark:border-white/10 dark:bg-white/[0.05]"
+                className="surface-card group relative mb-4 break-inside-avoid overflow-hidden"
               >
+                {!photo.approved && (
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-warning px-3 py-1 text-[11px] font-bold text-white shadow-sm">
+                    待审核
+                  </span>
+                )}
                 <button
                   type="button"
                   onClick={() => setSelectedPhoto(photo)}
@@ -428,19 +493,37 @@ export default function PhotoWall() {
                   </div>
                 </button>
                 {isOwner && (
-                  <button
-                    type="button"
-                    onClick={() => void handleDelete(photo)}
-                    disabled={deletingId === photo.id}
-                    className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-error disabled:opacity-60"
-                    aria-label={`删除照片：${photo.title}`}
-                  >
-                    {deletingId === photo.id ? (
-                      <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-                    ) : (
-                      <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  <div className="absolute right-3 top-3 z-10 flex gap-2">
+                    {!photo.approved && (
+                      <button
+                        type="button"
+                        onClick={() => void handleApprove(photo)}
+                        disabled={approvingId === photo.id}
+                        className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-success px-3 text-xs font-bold text-white shadow-sm transition hover:brightness-95 disabled:opacity-60"
+                        aria-label={`通过照片：${photo.title}`}
+                      >
+                        {approvingId === photo.id ? (
+                          <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+                        ) : (
+                          <Check className="h-4 w-4" aria-hidden="true" />
+                        )}
+                        通过
+                      </button>
                     )}
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => void handleDelete(photo)}
+                      disabled={deletingId === photo.id}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-error disabled:opacity-60"
+                      aria-label={`${photo.approved ? '删除' : '拒绝'}照片：${photo.title}`}
+                    >
+                      {deletingId === photo.id ? (
+                        <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+                      ) : (
+                        <Trash2 className="h-4 w-4" aria-hidden="true" />
+                      )}
+                    </button>
+                  </div>
                 )}
               </article>
             );
@@ -509,14 +592,26 @@ export default function PhotoWall() {
         </div>
       </Dialog>
 
-      <Dialog open={uploadOpen} onClose={() => !uploading && setUploadOpen(false)} className="relative z-[80]">
+      <Dialog
+        open={uploadOpen}
+        onClose={() => {
+          if (!uploading) {
+            setUploadOpen(false);
+            setLoginMode(false);
+          }
+        }}
+        className="relative z-[80]"
+      >
         <div className="fixed inset-0 bg-black/45 backdrop-blur-sm" aria-hidden="true" />
         <div className="fixed inset-0 overflow-y-auto p-4 sm:p-8">
           <div className="flex min-h-full items-center justify-center">
             <DialogPanel className="relative w-full max-w-xl rounded-[1.75rem] bg-background p-5 shadow-2xl sm:p-7">
               <button
                 type="button"
-                onClick={() => setUploadOpen(false)}
+                onClick={() => {
+                  setUploadOpen(false);
+                  setLoginMode(false);
+                }}
                 disabled={uploading}
                 className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 text-neutral-600 dark:border-white/10"
                 aria-label="关闭上传窗口"
@@ -525,17 +620,17 @@ export default function PhotoWall() {
               </button>
 
               <DialogTitle className="pr-12 text-2xl font-bold tracking-tight text-primary">
-                {isOwner ? '上传兴趣照片' : '本人登录'}
+                {loginMode ? '本人审核登录' : isOwner ? '上传兴趣照片' : '投稿到照片墙'}
               </DialogTitle>
 
-              {authLoading ? (
+              {loginMode && authLoading ? (
                 <div className="flex min-h-40 items-center justify-center">
                   <LoaderCircle className="h-6 w-6 animate-spin text-accent" aria-label="正在检查登录状态" />
                 </div>
-              ) : !isOwner ? (
+              ) : loginMode && !isOwner ? (
                 <div className="mt-5">
                   <p className="text-sm leading-7 text-neutral-600">
-                    上传入口只对站点本人开放。点击后，登录链接会发送到站点管理员邮箱。
+                    审核入口只对站点本人开放。点击后，登录链接会发送到管理员邮箱。
                   </p>
                   {magicLinkSent ? (
                     <div className="mt-5 rounded-2xl border border-success/25 bg-success/8 p-4 text-sm leading-6 text-neutral-700">
@@ -557,6 +652,11 @@ export default function PhotoWall() {
                 </div>
               ) : (
                 <form onSubmit={handleUpload} className="mt-5 space-y-4">
+                  {!isOwner && (
+                    <p className="rounded-2xl border border-accent/15 bg-accent/[0.045] p-4 text-sm leading-6 text-neutral-600">
+                      投稿无需登录。提交后将由站点本人审核，审核通过才会公开展示。
+                    </p>
+                  )}
                   <label className="block">
                     <span className="text-sm font-semibold text-primary">照片</span>
                     <input
@@ -662,15 +762,13 @@ export default function PhotoWall() {
                     ) : (
                       <Upload className="h-4 w-4" aria-hidden="true" />
                     )}
-                    {uploading ? '正在上传…' : '发布到照片墙'}
+                    {uploading
+                      ? '正在上传…'
+                      : isOwner
+                        ? '发布到照片墙'
+                        : '提交审核'}
                   </button>
                 </form>
-              )}
-
-              {uploadError && !isOwner && (
-                <p role="alert" className="mt-4 text-sm text-error">
-                  {uploadError}
-                </p>
               )}
             </DialogPanel>
           </div>
