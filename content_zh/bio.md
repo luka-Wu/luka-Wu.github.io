@@ -1,4 +1,4 @@
-嗨，很高兴在这里遇见你！我本科就读于[武汉大学新闻与传播学院](https://journal.whu.edu.cn/)，现在是[北京大学新闻与传播学院](https://sjc.pku.edu.cn/)研究生。
+嗨，很高兴在这里遇见你！我本科就读于[武汉大学](https://www.whu.edu.cn/)[新闻与传播学院](https://journal.whu.edu.cn/)，现在是[北京大学](https://www.pku.edu.cn/)[新闻与传播学院](https://sjc.pku.edu.cn/)研究生。
 
 平时喜欢把研究里的发现、生活中的观察和脑海里的产品想法，慢慢变成有趣的小项目。
 
