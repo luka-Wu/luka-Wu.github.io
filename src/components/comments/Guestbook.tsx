@@ -23,12 +23,14 @@ import {
   COMMENT_NAME_MAX_LENGTH,
   COMMENT_SUBMIT_COOLDOWN_MS,
   COMMENTS_PAGE_SIZE,
+  deleteComment,
   discardOrphanCommentImage,
   fetchComments,
   isCommentServiceConfigured,
   submitComment,
   type ICommentEntry,
 } from '@/lib/comments';
+import { getSupabaseClient, SITE_ADMIN_EMAIL } from '@/lib/supabase';
 
 const COMMENT_LAST_SUBMITTED_KEY = 'prism-comment-last-submitted-at';
 const COMMENT_AUTHOR_KEY = 'prism-comment-author';
@@ -50,6 +52,8 @@ export default function Guestbook() {
   const [loading, setLoading] = useState(configured);
   const [loadingMore, setLoadingMore] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [deletingCommentId, setDeletingCommentId] = useState('');
+  const [isOwner, setIsOwner] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [loadError, setLoadError] = useState('');
   const [formStatus, setFormStatus] = useState<IFormStatus>({
@@ -84,6 +88,33 @@ export default function Guestbook() {
 
     void loadFirstPage();
   }, [loadFirstPage]);
+
+  useEffect(() => {
+    if (!configured) return;
+
+    const supabase = getSupabaseClient();
+    let active = true;
+    const updateOwnerState = (email?: string) => {
+      if (active) {
+        setIsOwner((email || '').toLowerCase() === SITE_ADMIN_EMAIL);
+      }
+    };
+
+    void supabase.auth.getSession().then(({ data }) => {
+      updateOwnerState(data.session?.user.email);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      updateOwnerState(session?.user.email);
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, [configured]);
 
   useEffect(() => {
     if (!commentImage) {
@@ -197,6 +228,26 @@ export default function Guestbook() {
       });
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDeleteComment = async (comment: ICommentEntry) => {
+    if (!isOwner || !window.confirm(`确认删除“${comment.name}”的这条留言吗？`)) {
+      return;
+    }
+
+    setDeletingCommentId(comment.id);
+    setLoadError('');
+
+    try {
+      await deleteComment(comment.id);
+      setComments((currentComments) =>
+        currentComments.filter((currentComment) => currentComment.id !== comment.id),
+      );
+    } catch (error) {
+      setLoadError(error instanceof Error ? error.message : '留言删除失败，请稍后再试。');
+    } finally {
+      setDeletingCommentId('');
     }
   };
 
@@ -430,7 +481,12 @@ export default function Guestbook() {
         {comments.length > 0 && (
           <div className="mt-5 space-y-3">
             {comments.map((comment) => (
-              <CommentCard key={comment.id} comment={comment} />
+              <CommentCard
+                key={comment.id}
+                comment={comment}
+                deleting={deletingCommentId === comment.id}
+                onDelete={isOwner ? () => void handleDeleteComment(comment) : undefined}
+              />
             ))}
           </div>
         )}

@@ -1,3 +1,5 @@
+import { getSupabaseClient } from '@/lib/supabase';
+
 export const COMMENT_NAME_MAX_LENGTH = 30;
 export const COMMENT_CONTENT_MAX_LENGTH = 300;
 export const COMMENT_SUBMIT_COOLDOWN_MS = 20_000;
@@ -176,4 +178,15 @@ export async function discardOrphanCommentImage(imagePath: string): Promise<void
     headers: createHeaders(config),
     body: JSON.stringify({ p_image_path: imagePath }),
   });
+}
+
+export async function deleteComment(id: string): Promise<void> {
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase.rpc('delete_comment', {
+    p_comment_id: id,
+  });
+
+  if (error || data !== true) {
+    throw new Error('留言删除失败，请稍后再试。');
+  }
 }

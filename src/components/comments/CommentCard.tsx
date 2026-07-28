@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
-import { X } from 'lucide-react';
+import { LoaderCircle, X } from 'lucide-react';
 import type { ICommentEntry } from '@/lib/comments';
 import { getGuestbookImageUrl } from '@/lib/media';
 
@@ -16,6 +16,8 @@ const AVATAR_STYLES = [
 interface ICommentCardProps {
   comment: ICommentEntry;
   compact?: boolean;
+  deleting?: boolean;
+  onDelete?: () => void;
 }
 
 function formatCommentDate(value: string): string {
@@ -34,7 +36,12 @@ function formatCommentDate(value: string): string {
   }).format(date);
 }
 
-export default function CommentCard({ comment, compact = false }: ICommentCardProps) {
+export default function CommentCard({
+  comment,
+  compact = false,
+  deleting = false,
+  onDelete,
+}: ICommentCardProps) {
   const [imageOpen, setImageOpen] = useState(false);
   const firstCharacter = Array.from(comment.name.trim())[0] || '访';
   const colorIndex = Array.from(comment.name).reduce(
@@ -46,11 +53,27 @@ export default function CommentCard({ comment, compact = false }: ICommentCardPr
   return (
     <>
       <article
-        className={`surface-card group transition-transform duration-300 hover:-translate-y-0.5 ${
+        className={`surface-card group relative transition-transform duration-300 hover:-translate-y-0.5 ${
           compact ? 'p-4' : 'p-5 sm:p-6'
         }`}
       >
-        <div className="flex items-start gap-3.5">
+        {onDelete && (
+          <button
+            type="button"
+            onClick={onDelete}
+            disabled={deleting}
+            className="absolute right-3 top-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white/85 text-neutral-500 shadow-sm transition hover:border-error/30 hover:bg-error hover:text-white disabled:opacity-60 dark:border-white/10 dark:bg-neutral-900/85"
+            aria-label={`删除${comment.name}的留言`}
+            title="删除留言"
+          >
+            {deleting ? (
+              <LoaderCircle className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+            ) : (
+              <X className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
+          </button>
+        )}
+        <div className={`flex items-start gap-3.5 ${onDelete ? 'pr-9' : ''}`}>
           <span
             aria-hidden="true"
             className={`flex shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-bold text-white shadow-sm ${

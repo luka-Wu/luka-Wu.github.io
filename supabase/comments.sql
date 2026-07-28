@@ -1,5 +1,16 @@
 create extension if not exists pgcrypto;
 
+create or replace function public.is_site_admin()
+returns boolean
+language sql
+stable
+set search_path = ''
+as $$
+  select lower(coalesce(auth.jwt() ->> 'email', '')) = 'wuyy.77@qq.com';
+$$;
+
+grant execute on function public.is_site_admin() to anon, authenticated;
+
 create table if not exists public.comments (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -140,3 +151,43 @@ $$;
 revoke all on function public.discard_orphan_comment_image(text) from public;
 grant execute on function public.discard_orphan_comment_image(text)
   to anon, authenticated;
+
+drop function if exists public.delete_comment(uuid);
+
+create function public.delete_comment(p_comment_id uuid)
+returns boolean
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  comment_image_path text;
+begin
+  if not public.is_site_admin() then
+    raise exception 'COMMENT_DELETE_FORBIDDEN';
+  end if;
+
+  select image_path
+  into comment_image_path
+  from public.comments
+  where id = p_comment_id;
+
+  if not found then
+    return false;
+  end if;
+
+  delete from public.comments
+  where id = p_comment_id;
+
+  if comment_image_path is not null then
+    delete from storage.objects
+    where bucket_id = 'guestbook-media'
+      and name = comment_image_path;
+  end if;
+
+  return true;
+end;
+$$;
+
+revoke all on function public.delete_comment(uuid) from public;
+grant execute on function public.delete_comment(uuid) to authenticated;

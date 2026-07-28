@@ -55,7 +55,7 @@ NEXT_PUBLIC_SITE_ADMIN_EMAIL=wuyy.77@qq.com
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-管理员邮箱默认使用 `wuyy.77@qq.com`。如需更换，可新增 Repository variable `NEXT_PUBLIC_SITE_ADMIN_EMAIL`，并同步修改 [`supabase/media.sql`](../supabase/media.sql) 中的管理员邮箱后重新执行脚本。
+管理员邮箱默认使用 `wuyy.77@qq.com`。如需更换，可新增 Repository variable `NEXT_PUBLIC_SITE_ADMIN_EMAIL`，并同步修改 [`supabase/media.sql`](../supabase/media.sql) 与 [`supabase/comments.sql`](../supabase/comments.sql) 中的管理员邮箱后重新执行脚本。
 
 推送到 `main` 后，GitHub Actions 会在构建阶段注入配置并部署留言、照片墙和图片上传功能。
 
@@ -71,11 +71,11 @@ NEXT_PUBLIC_SITE_ADMIN_EMAIL=wuyy.77@qq.com
 
 图片在浏览器端缩放并重新编码为 WebP，因此 EXIF 和定位信息不会写入上传文件。单张原图和处理后的文件均不能超过 3MB。
 
-## 6. 隐藏不合适的留言
+## 6. 管理公开留言
 
-留言默认立即公开。如需隐藏某条留言，可在 Supabase Table Editor 中将该行的 `approved` 改为 `false`。
+留言默认立即公开。站点本人完成“审核登录”后，公开留言卡片右上角会显示 `X`，确认后会永久删除留言及其附图。
 
-公开页面只会读取 `approved = true` 的留言。
+如需暂时隐藏而不删除，可在 Supabase Table Editor 中将该行的 `approved` 改为 `false`。公开页面只会读取 `approved = true` 的留言。
 
 ## 7. 基础防刷说明
 
