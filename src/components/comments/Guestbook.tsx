@@ -1,13 +1,28 @@
 'use client';
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { AlertCircle, LoaderCircle, MessageCircle, RefreshCw, Send } from 'lucide-react';
+import {
+  AlertCircle,
+  ImagePlus,
+  LoaderCircle,
+  MessageCircle,
+  RefreshCw,
+  Send,
+  X,
+} from 'lucide-react';
 import CommentCard from '@/components/comments/CommentCard';
+import {
+  MEDIA_ACCEPTED_TYPES,
+  MEDIA_MAX_FILE_SIZE,
+  uploadGuestbookImage,
+  validateImageFile,
+} from '@/lib/media';
 import {
   COMMENT_CONTENT_MAX_LENGTH,
   COMMENT_NAME_MAX_LENGTH,
   COMMENT_SUBMIT_COOLDOWN_MS,
   COMMENTS_PAGE_SIZE,
+  discardOrphanCommentImage,
   fetchComments,
   isCommentServiceConfigured,
   submitComment,
@@ -28,6 +43,8 @@ export default function Guestbook() {
   const [comments, setComments] = useState<ICommentEntry[]>([]);
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
+  const [commentImage, setCommentImage] = useState<File | null>(null);
+  const [commentImagePreview, setCommentImagePreview] = useState('');
   const [website, setWebsite] = useState('');
   const [loading, setLoading] = useState(configured);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -66,6 +83,18 @@ export default function Guestbook() {
 
     void loadFirstPage();
   }, [loadFirstPage]);
+
+  useEffect(() => {
+    if (!commentImage) {
+      setCommentImagePreview('');
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(commentImage);
+    setCommentImagePreview(previewUrl);
+
+    return () => URL.revokeObjectURL(previewUrl);
+  }, [commentImage]);
 
   const handleLoadMore = async () => {
     if (loadingMore || !hasMore) return;
@@ -135,14 +164,19 @@ export default function Guestbook() {
 
     setSubmitting(true);
     setFormStatus({ type: 'idle', message: '' });
+    let uploadedImagePath: string | null = null;
 
     try {
-      const createdComment = await submitComment(cleanName, cleanContent);
+      uploadedImagePath = commentImage
+        ? await uploadGuestbookImage(commentImage, 'comments')
+        : null;
+      const createdComment = await submitComment(cleanName, cleanContent, uploadedImagePath);
       setComments((currentComments) => [
         createdComment,
         ...currentComments.filter((comment) => comment.id !== createdComment.id),
       ]);
       setContent('');
+      setCommentImage(null);
       setFormStatus({ type: 'success', message: '留言已发布，谢谢你的分享。' });
       formStartedAtRef.current = Date.now();
 
@@ -153,6 +187,9 @@ export default function Guestbook() {
         // 存储失败不影响已经成功的提交。
       }
     } catch (error) {
+      if (uploadedImagePath) {
+        void discardOrphanCommentImage(uploadedImagePath);
+      }
       setFormStatus({
         type: 'error',
         message: error instanceof Error ? error.message : '评论提交失败，请稍后再试。',
@@ -226,6 +263,60 @@ export default function Guestbook() {
                 placeholder="分享你的想法、建议或一句问候……"
                 className="w-full resize-y rounded-2xl border border-neutral-200 bg-white/72 px-4 py-3 text-[15px] leading-7 text-primary outline-none transition focus:border-accent/50 focus:ring-4 focus:ring-accent/10 dark:border-white/10 dark:bg-white/[0.055]"
               />
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-sm font-semibold text-primary">附一张照片（可选）</span>
+              <label className="flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-neutral-300 bg-white/45 px-4 py-3 text-sm font-semibold text-neutral-600 transition hover:border-accent/35 hover:text-accent dark:border-white/15 dark:bg-white/[0.035]">
+                <ImagePlus className="h-4 w-4" aria-hidden="true" />
+                {commentImage ? '重新选择照片' : '选择照片'}
+                <input
+                  type="file"
+                  accept={MEDIA_ACCEPTED_TYPES.join(',')}
+                  className="sr-only"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0] || null;
+                    setFormStatus({ type: 'idle', message: '' });
+
+                    if (!file) {
+                      setCommentImage(null);
+                      return;
+                    }
+
+                    try {
+                      validateImageFile(file);
+                      setCommentImage(file);
+                    } catch (error) {
+                      setCommentImage(null);
+                      setFormStatus({
+                        type: 'error',
+                        message: error instanceof Error ? error.message : '图片无法使用。',
+                      });
+                    }
+                  }}
+                />
+              </label>
+              <p className="text-[11px] leading-5 text-neutral-500">
+                JPEG、PNG 或 WebP，最大 {MEDIA_MAX_FILE_SIZE / 1024 / 1024}MB。上传前会压缩并移除定位信息。
+              </p>
+              {commentImagePreview && (
+                <div className="relative overflow-hidden rounded-2xl border border-white/60 bg-neutral-100 dark:border-white/10 dark:bg-neutral-800">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={commentImagePreview}
+                    alt="留言照片预览"
+                    className="max-h-56 w-full object-contain"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setCommentImage(null)}
+                    className="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/55 text-white"
+                    aria-label="移除留言照片"
+                  >
+                    <X className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="absolute -left-[9999px]" aria-hidden="true">

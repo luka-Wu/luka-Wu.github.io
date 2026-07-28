@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Guestbook from '@/components/comments/Guestbook';
+import PhotoWall from '@/components/comments/PhotoWall';
 
 export const metadata: Metadata = {
   title: '留言',
@@ -31,6 +32,7 @@ export default function GuestbookPage() {
         </div>
       </header>
 
+      <PhotoWall />
       <Guestbook />
     </div>
   );

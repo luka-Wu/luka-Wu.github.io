@@ -7,6 +7,7 @@ export interface ICommentEntry {
   id: string;
   name: string;
   content: string;
+  image_path: string | null;
   created_at: string;
 }
 
@@ -55,6 +56,7 @@ function isCommentEntry(value: unknown): value is ICommentEntry {
     typeof entry.id === 'string' &&
     typeof entry.name === 'string' &&
     typeof entry.content === 'string' &&
+    (typeof entry.image_path === 'string' || entry.image_path === null) &&
     typeof entry.created_at === 'string'
   );
 }
@@ -79,6 +81,12 @@ async function readError(response: Response): Promise<Error> {
   if (message.includes('COMMENT_CONTENT_INVALID')) {
     return new Error(`留言需要填写 1–${COMMENT_CONTENT_MAX_LENGTH} 个字符。`);
   }
+  if (
+    message.includes('COMMENT_IMAGE_PATH_INVALID') ||
+    message.includes('COMMENT_IMAGE_NOT_FOUND')
+  ) {
+    return new Error('留言图片无法使用，请重新选择。');
+  }
 
   return new Error('评论提交失败，请稍后再试。');
 }
@@ -101,7 +109,7 @@ export async function fetchComments({
   const safeLimit = Math.min(Math.max(Math.floor(limit), 1), 50);
   const safeOffset = Math.max(Math.floor(offset), 0);
   const query = new URLSearchParams({
-    select: 'id,name,content,created_at',
+    select: 'id,name,content,image_path,created_at',
     order: 'created_at.desc',
     limit: String(safeLimit),
     offset: String(safeOffset),
@@ -121,7 +129,11 @@ export async function fetchComments({
   return Array.isArray(payload) ? payload.filter(isCommentEntry) : [];
 }
 
-export async function submitComment(name: string, content: string): Promise<ICommentEntry> {
+export async function submitComment(
+  name: string,
+  content: string,
+  imagePath?: string | null,
+): Promise<ICommentEntry> {
   const config = getCommentServiceConfig();
 
   if (!config) {
@@ -137,6 +149,7 @@ export async function submitComment(name: string, content: string): Promise<ICom
     body: JSON.stringify({
       p_name: name,
       p_content: content,
+      p_image_path: imagePath || null,
     }),
   });
 
@@ -152,4 +165,15 @@ export async function submitComment(name: string, content: string): Promise<ICom
   }
 
   return entry;
+}
+
+export async function discardOrphanCommentImage(imagePath: string): Promise<void> {
+  const config = getCommentServiceConfig();
+  if (!config) return;
+
+  await fetch(`${config.url}/rest/v1/rpc/discard_orphan_comment_image`, {
+    method: 'POST',
+    headers: createHeaders(config),
+    body: JSON.stringify({ p_image_path: imagePath }),
+  });
 }
