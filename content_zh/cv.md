@@ -1,7 +1,7 @@
 ## 教育经历
 
-- [北京大学](https://www.pku.edu.cn/)[新闻与传播学院](https://sjc.pku.edu.cn/)｜研究生
-- [武汉大学](https://www.whu.edu.cn/)[新闻与传播学院](https://journal.whu.edu.cn/)｜广告学本科毕业
+- [北京大学](https://www.pku.edu.cn/)｜[新闻与传播学院](https://sjc.pku.edu.cn/)｜研究生
+- [武汉大学](https://www.whu.edu.cn/)｜[新闻与传播学院](https://journal.whu.edu.cn/)｜广告学本科毕业
   - 连续三年综合测评第一，以推免综合成绩第一保研至北京大学，为全院唯一
 - [湖南省长沙市第一中学](http://www.hnfms.com.cn/)｜高中
 - [长沙青竹湖湘一外国语学校](https://mp.weixin.qq.com/s/V0Pu9BUwk3b1VO1TBUiuBg)｜初中
