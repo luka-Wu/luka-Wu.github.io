@@ -8,6 +8,13 @@ import { getConfig } from '@/lib/config';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 import type { SiteConfig } from '@/lib/config';
 
+const BUILD_DATE = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'Asia/Shanghai',
+}).format(new Date());
+
 export async function generateMetadata(): Promise<Metadata> {
   const config = getConfig();
   const runtimeI18n = getRuntimeI18nConfig(config.i18n);
@@ -173,7 +180,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer
-              lastUpdated={config.site.last_updated}
+              lastUpdated={config.site.last_updated || BUILD_DATE}
               lastUpdatedByLocale={lastUpdatedByLocale}
               defaultLocale={runtimeI18n.defaultLocale}
             />
